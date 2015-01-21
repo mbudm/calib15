@@ -1,0 +1,97 @@
+.calibDot{
+ position:absolute;
+ display:none;
+}
+
+.calibDot-topleft{
+	top:50px;
+	left:100px;
+}
+
+/*
+
+other positions
+
+*/
+.calibDot--inner{
+ position:relative;
+ width:180px;
+ height:180px;
+}
+.calibDot--bg{
+ background: url(img/);
+ background: #666 url('/img/rotate_8points_sprite.jpg') no-repeat -12px -5px;
+ width:100%;
+ height:100%;
+ border-radius:90px;
+}
+.calibDot--userHead{
+ background:#ff0;
+ width:20px;
+ height:20px;
+ border-radius:10px;
+ position:absolute;
+ top:80px;
+ left:80px;
+}
+.calibDot--userHead-up{top:0;bottom:auto;}
+.calibDot--userHead-down{bottom:0;top:auto;}
+.calibDot--userHead-left{left:0;right:auto;}
+.calibDot--userHead-right{right:0;left:auto;}
+
+.calibDot--userHead-up.calibDot--userHead-left{top:23px;right:23px;}
+.calibDot--userHead-up.calibDot--userHead-right{top:23px;left:23px;}
+.calibDot--userHead-down.calibDot--userHead-left{bottom:23px;left:23px;}
+.calibDot--userHead-down.calibDot--userHead-right{bottom:23px;right:23px;}
+
+
+.calibDot--message{
+ position:absolute;
+ font-family:Georgia, serif;
+ font-weight:bold;
+ color:#888;
+ font-size:1.2em;
+}
+.calibDot--message-up{
+ top:-1.5em;
+ text-align:center;
+ width:100%;
+}
+.calibDot--message-right{
+ top:40%;
+ right:-65%;
+ text-align:left;
+ width:60%;
+}
+.calibDot--message-down{
+ bottom:-1.5em;
+ text-align:center;
+ width:100%;
+}
+.calibDot--message-left{
+ top:40%;
+ left:-65%;
+ text-align:right;
+ width:60%;
+}
+
+.calibDot--message-center{
+ top:40%;
+ text-align:center;
+ width:100%;
+ color:#fff;
+ text-shadow:0 0 10px #000;
+ font-size:1.8em;
+ }
+ 
+ .calibDebugger{
+	 position:absolute;
+	 top:0;
+	 right:0;
+	 font-size:1em;
+	 font-family:monospace;
+	 width:50%;
+	 height:80%;
+	 padding:20px;
+	 display:block;
+ }
