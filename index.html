@@ -83,7 +83,7 @@
 			this.dotRadius = $('.calibDot--inner').width() /2; 
 			this.$userHead = $('.calibDot--userHead');
 			this.$calibDot = $('.calibDot');
-			this.$calibMessage = $('calibDot--message');
+			this.$calibMessage = $('.calibDot--message');
 			this.$debug =  $('.calibDebugger');
 			
 			this.stores = {yaw:[],pitch:[]};
@@ -171,7 +171,7 @@
 				// update the instructions
 				if(this.instructionMode ){
 					var timeNow = Date.now();
-					var timeElapsed = Math.max( 0, timeNow - this.instructStart );
+					var timeElapsed = Math.max( 0, ( timeNow - this.instructions[this.instructionsIdx].start ) );
 					if(timeElapsed > this.instructions[this.instructionsIdx].delay){
 						if( this.passCriteria(this.instructions[this.instructionsIdx]) ){
 							this.updateInstructions(timeNow);
@@ -201,6 +201,7 @@
 						break;
 					case 83: //s
 						me.beginTracking();
+						me.instructionsStart();
 						break;
 					case 65: //a
 						me.simulateStart();
@@ -293,17 +294,22 @@
 			this.instructStart = Date.now();
 			this.instructions = calibInstructions;
 			this.instructionsIdx = 0;
+			this.setUpInstructions();
 		},
 		updateInstructions:function(timeStamp){
 			this.instructionsIdx++;
 			if(this.instructionsIdx < this.instructions.length){
-				var removes = this.getMessageClasses(this.instructions[this.instructionsIdx - 1]);
-				var adds = this.getMessageClasses(this.instructions[this.instructionsIdx]);
-				this.instructions[this.instructionsIdx].start = Date.now();
-				this.$calibMessage.html(this.instructions[this.instructionsIdx].msg).removeClass(removes).addClass(adds)
+				this.setUpInstructions();
 			}else{
 				this.instructionMode = false;
 			}
+		},
+		setUpInstructions:function(){
+			var removes = this.instructionsIdx > 0 ? this.getMessageClasses(this.instructions[this.instructionsIdx - 1]) : [] ;
+			var adds = this.getMessageClasses(this.instructions[this.instructionsIdx]);
+			this.instructions[this.instructionsIdx].start = Date.now();
+			this.$calibMessage.removeClass(removes.join(' ')).addClass(adds.join(' '));
+			this.$calibMessage.html(this.instructions[this.instructionsIdx].msg);
 		},
 		passCriteria:function(instructionObj){
 			if(!instructionObj.criteria){
@@ -317,7 +323,7 @@
 						console.log(this.instructionsIdx,instructionObj,'Criteria passed',pitchCat);
 						return true;
 					}else{
-						console.log(this.instructionsIdx,instructionObj,'Criteria Fail PitchCat:'+pitchCat+' != '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].pitch+ ' thresholds up:'+this.thresholdUp+' down:'+this.thresholdDown );
+						//console.log(this.instructionsIdx,instructionObj,'Criteria Fail PitchCat:'+pitchCat+' != '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].pitch+ ' thresholds up:'+this.thresholdUp+' down:'+this.thresholdDown );
 					}
 					break;
 				case 'left':
@@ -327,7 +333,7 @@
 						console.log(this.instructionsIdx,instructionObj,'Criteria passed',yawCat);
 						return true;
 					}else{
-						console.log(this.instructionsIdx,instructionObj,'Criteria Fail YawCat:'+yawCat+' '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].yaw+ ' thresholds left:'+this.thresholdLeft+' right:'+this.thresholdRight );
+						//console.log(this.instructionsIdx,instructionObj,'Criteria Fail YawCat:'+yawCat+' '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].yaw+ ' thresholds left:'+this.thresholdLeft+' right:'+this.thresholdRight );
 					}
 					break;
 			}
@@ -363,9 +369,9 @@
 		},
 		categorisePitch:function(pitch){
 			var cat = "center";
-			if(pitch > this.thresholdUp){
+			if(pitch < this.thresholdUp){
 				cat = "up";
-			}else if(pitch < this.thresholdDown){
+			}else if(pitch > this.thresholdDown){
 				cat = "down";
 			}
 			return cat;
@@ -392,14 +398,17 @@
 	} );
 	
 	var calibInstructions = [
-		{delay:2000, msg:"Move the yellow dot by gently turning and tilting your head"},
-		{delay:1, expire:5000, msg:"Tilt your head up", criteria:{direction:"up", ma:1, success:"Awesome", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the right", criteria:{direction:"right", ma:0, success:"Excellent", delay:50, failsequence:"directionFail"} },
-		{delay:1, expire:15000, msg:"Tilt your head down", criteria:{direction:"down", ma:0, success:"Well done", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the left", criteria:{direction:"left", ma:1, success:"Good", delay:50, failsequence:"directionFail"}  },
+
+		{delay:2000, msg:"Hi there! Let's calibrate!"},
+		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
+		{delay:2000, msg:"Cool huh? Ok let's move on to the good stuff."},
+		{delay:1, expire:5000, msg:"Tilt your head up", criteria:{direction:"up", ma:4, success:"Awesome", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Turn your head to the right", criteria:{direction:"right", ma:4, success:"Excellent", delay:50, failsequence:"directionFail"} },
+		{delay:1, expire:15000, msg:"Tilt your head down", criteria:{direction:"down", ma:4, success:"Well done", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Turn your head to the left", criteria:{direction:"left", ma:4, success:"Good", delay:50, failsequence:"directionFail"}  },
 		{delay:2000, msg:"You're doing great, don't forget to relax."},
-		{delay:1, expire:15000, msg:"Tilt up again", criteria:{direction:"up", ma:2, success:"Sweet", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Once more to the right", criteria:{direction:"right", ma:2, success:"Okay", delay:50, failsequence:"directionFail"} },
+		{delay:1, expire:15000, msg:"Tilt up again", criteria:{direction:"up", ma:4, success:"Sweet", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Once more to the right", criteria:{direction:"right", ma:4, success:"Okay", delay:50, failsequence:"directionFail"} },
 		{delay:1, expire:15000, msg:"Tilt down", criteria:{direction:"down", ma:4, success:"Great", delay:50, failsequence:"directionFail"}  },
 		{delay:1, expire:15000, msg:"Turn left", criteria:{direction:"left", ma:3, success:"Bang on.", delay:50, failsequence:"directionFail"}  },
 		{delay:4000, msg:"Cool bananas, that spot is now calibrated."},
