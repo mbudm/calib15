@@ -1,0 +1,58 @@
+<html>
+	<head>
+		 <title>Calib 2015 UI test</title>
+	     <script type="text/javascript" src="lib/calib.js"></script>
+	     <script type="text/javascript" src="lib/jquery-1.11.1.js"></script>
+		 <link href="style/calibdot.css" media="all" rel="stylesheet" />
+	</head>
+	<body class="calib-active">
+	<div class="calibDot calibDot-topleft">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message calibDot--message-up"><div class="calibDot--message--inner"><span class="text">A top message.</span></div></div>
+		</div>
+	</div>
+	
+	<div class="calibDot calibDot-topright">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message calibDot--message-right"><div class="calibDot--message--inner"><span class="text">Right message goes here.</span></div></div>
+		</div>
+	</div>
+	
+	<div class="calibDot calibDot-bottomleft">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message calibDot--message-left"><div class="calibDot--message--inner"><span class="text">Left message goes here.</span></div></div>
+		</div>
+	</div>
+	
+	<div class="calibDot calibDot-bottomright">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message calibDot--message-down"><div class="calibDot--message--inner"><span class="text">Down message goes here.</span></div></div>
+		</div>
+	</div>
+	
+	<div class="calibDot calibDot-center">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message calibDot--message-center"><div class="calibDot--message--inner"><span class="text">Centered message goes here.</span></div></div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+	$(function() {
+		xlabs.calib.ui.adjustMessagePosition();
+   
+	});
+	</script>
+	
+	</body>
+</html>

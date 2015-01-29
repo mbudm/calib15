@@ -1,6 +1,8 @@
 <html>
 	<head>
-		 <title>Calib 2015 b</title>
+		 <title>Calib 2015 b</title> 
+		 <script type="text/javascript" src="lib/calibration/ui.js"></script>
+		 <script type="text/javascript" src="lib/calibration/proxy.js"></script>
 	     <script type="text/javascript" src="lib/jquery-1.11.1.js"></script>
 		 <link href="style/calibdot.css" media="all" rel="stylesheet" />
 	</head>
@@ -9,11 +11,10 @@
 		<div class="calibDot--inner">
 			<div class="calibDot--bg"></div>
 			<div class="calibDot--userHead"></div>
-			<div class="calibDot--message"></div>
-			<!--<div class="calibDot--message calibDot--message-center calibDot--message-xlarge">Great!</div>-->
+			<div class="calibDot--message"><div class="calibDot--message--inner"><span class="text"></span></div></div>
 		</div>
-		
 	</div>
+	<div class="gazeDot">Your gaze</div>
 	<textarea class="calibDebugger"></textarea>
 	<script type="text/javascript">
 	
@@ -22,396 +23,73 @@
 	
 	Todo list
 	
-	-- playback recorded head tracking, at original speed
-	-- add instructions player
-	-- test thresholds with test data
+	-- playback recorded head tracking, at original speed (DONE)
+	-- add instructions player (DONE)
+	-- test thresholds with test data (DONE)
 	-- auto adjust thresholds
+	-- send calibration data
+	-- do calibration check
 	-- styles for mid points, perhaps NNE/NNW etc?
 	-- enable disable (or flag) based on crosshair (x,y), canthi checking, yaw validation
 	-- environment checking. dark/light imbalanced
 	
 	*/
 	
-	
+	var xlabs;
 	$(function() {
-	   calib2015.setup();
-   
+		xlabs = {
+			calib:{
+				ui:calibUi,
+				proxy:calibProxy
+			}
+		};
+		xlabs.calib.ui.setup();
+		xlabs.calib.proxy.debugMode(true);
+		$( "body" ).keyup(function( event ) {
+			switch( event.which) {
+				case 88: //x
+					xlabs.calib.proxy.off();
+					break;
+				case 83: //s
+					xlabs.calib.proxy.on();
+					xlabs.calib.ui.instructionsStart();
+					break;
+				case 65: //a
+					xlabs.calib.ui.simulateStart();
+					xlabs.calib.ui.instructionsStart();
+					break;
+				case 90: //z
+					xlabs.calib.ui.simulateStop();
+					break;
+			}
+		});
+		document.addEventListener( "xLabsApiReady", function() {
+			//xlabs.calib.ui.onApiReady();
+		});
+
+		document.addEventListener( "xLabsApiState", function( event ) {
+			xlabs.calib.ui.onApiState( event.detail );
+		});
 	});
+
+
 	
-
-
-	var calib2015 = {
-		documentOffsetX : 0, // offset of HTML document origin from screen origin
-		documentOffsetY : 0,
-		
-		/* Thresholds determined from example range:
-
-		ymax: 0.190063223
-		ymin: -0.167448059
-		pmax: 0.989368975
-		pmin: 0.504602909
-
-		*/
-		thresholdUp:0.63,
-		thresholdDown:0.85,
-		thresholdLeft:0.1,
-		thresholdRight:-0.1,
-		
-		userUp:null,
-		userDown:null,
-		userRight:null,
-		userLeft:null,
-		
-		uHeadClsUp:'calibDot--userHead-up',
-		uHeadClsDown:'calibDot--userHead-down',
-		uHeadClsLeft:'calibDot--userHead-left',
-		uHeadClsRight:'calibDot--userHead-right',
-		
-		msgBaseCls:'calibDot--message',
-		
-		movingAverages: (function(){
-			var ma = [5,10,15,20,25], maObj = [];
-			for( var i = 0; i < ma.length; i++){
-				maObj.push({ma:ma[i],yaw:null,pitch:null});
-			}
-			return maObj;
-		})(), 
-
-		setup : function() {
-		  	console.log("alive");
-			
-			this.dotRadius = $('.calibDot--inner').width() /2; 
-			this.$userHead = $('.calibDot--userHead');
-			this.$calibDot = $('.calibDot');
-			this.$calibMessage = $('.calibDot--message');
-			this.$debug =  $('.calibDebugger');
-			
-			this.stores = {yaw:[],pitch:[]};
-			this.log = [];
-		},
-
-		onApiState : function( state ) {
-			if(!this.simMode){
-				this.update(state);
-			}
-		},
-		
-		update:function(state){
-			if(state.kvTrackingEnabled === 1){
-				this.$calibDot.show();
-				
-				this.$calibDot.addClass('calibDot-topleft');
-
-				
-				// positon the userhead marker( yellow dot)
-				if(this.userUp === null){
-					this.userUp = state.kvHeadPitch;
-					this.userDown = state.kvHeadPitch;
-					this.userRight = state.kvHeadYaw;
-					this.userLeft = state.kvHeadYaw;
-				}else{
-					this.userUp = Math.max(state.kvHeadPitch, this.userUp);
-					this.userDown = Math.min(state.kvHeadPitch, this.userDown);
-					this.userLeft= Math.max(state.kvHeadYaw, this.userLeft);
-					this.userRight = Math.min(state.kvHeadYaw, this.userRight);
-				}
-				
-				// categorise pitch and yaw
-				var removes = [];
-				var adds = [];
-				
-				/* use?
-				var pitchCat = this.categorisePitch(state.kvHeadPitch);
-				var yawCat = this.categoriseYaw(state.kvHeadYaw);
-				*/
-				
-				if(state.kvHeadPitch < this.thresholdUp){
-					removes.push(this.uHeadClsDown);
-					adds.push(this.uHeadClsUp);
-				}else if(state.kvHeadPitch > this.thresholdDown){
-					removes.push(this.uHeadClsUp);
-					adds.push(this.uHeadClsDown);
-				}else{
-					removes.push(this.uHeadClsUp,this.uHeadClsDown);
-				}
-				if(state.kvHeadYaw < this.thresholdRight){
-					removes.push(this.uHeadClsLeft);
-					adds.push(this.uHeadClsRight);
-				}else if(state.kvHeadYaw > this.thresholdLeft){
-					removes.push(this.uHeadClsRight);
-					adds.push(this.uHeadClsLeft);
-				}else{
-					removes.push(this.uHeadClsLeft,this.uHeadClsRight);
-				}
-
-				this.$userHead.removeClass(removes.join(' ')).addClass(adds.join(' '));
-				
-				
-				// logs
-				
-				this.stores.yaw.push(state.kvHeadYaw);
-				this.stores.pitch.push(state.kvHeadPitch);
-				
-				this.log.push({y:state.kvHeadYaw,p:state.kvHeadPitch,t:Date.now()}); //, state:state});
-				
-				
-				//moving averages
-				for(var i = 0; i < this.movingAverages.length; i++){
-					if(this.log.length >= this.movingAverages[i].ma ){
-						var maStartIdx = this.log.length - this.movingAverages[i].ma;
-						var prevStartIdx = this.movingAverages[i].pitch == null ? null : maStartIdx - 1;
-						this.movingAverages[i].pitch = prevStartIdx ? this.getArrayAverage(this.stores.pitch.slice(maStartIdx)) : this.getAdjustedAverage(this.stores.pitch[this.stores.pitch.length - 1], this.stores.pitch[prevStartIdx], this.movingAverages[i].pitch, this.movingAverages[i].ma ) ;
-						this.movingAverages[i].yaw = prevStartIdx ? this.getArrayAverage(this.stores.yaw.slice(maStartIdx)) : this.getAdjustedAverage(this.stores.yaw[this.stores.yaw.length - 1], this.stores.yaw[prevStartIdx], this.movingAverages[i].yaw, this.movingAverages[i].ma ) ;
-					}else{
-						break;
-					}
-				}
-				
-				
-				// update the instructions
-				if(this.instructionMode ){
-					var timeNow = Date.now();
-					var timeElapsed = Math.max( 0, ( timeNow - this.instructions[this.instructionsIdx].start ) );
-					if(timeElapsed > this.instructions[this.instructionsIdx].delay){
-						if( this.passCriteria(this.instructions[this.instructionsIdx]) ){
-							this.updateInstructions(timeNow);
-						}else if( this.timedOut(this.instructions[this.instructionsIdx]) ){
-							this.failsequence(this.instructions[this.instructionsIdx].criteria.failsequence);
-						}
-					}
-				}
-				
-				//debug
-				
-				this.$debug.val(JSON.stringify(this.movingAverages));
-				
-				
-			}else{
-				this.$calibDot.hide();
-			}
-			//console.log(state);
-		},
-
-		onApiReady : function() {
-		 	var me = this;
-			$( "body" ).keyup(function( event ) {
-				switch( event.which) {
-					case 88: //x
-						me.endTracking();
-						break;
-					case 83: //s
-						me.beginTracking();
-						me.instructionsStart();
-						break;
-					case 65: //a
-						me.simulateStart();
-						me.instructionsStart();
-						break;
-					case 90: //z
-						me.simulateStop();
-						break;
-				}
-			});
-		},
-
-		beginCalibration:function(){
-			window.postMessage( {target:"xLabs", payload:{user:"eyesdecide"}},"*");
-			window.postMessage( {target:"xLabs", payload:{calibrationStep:3}},"*");
-			window.postMessage( {target:"xLabs", payload:{calibrationMode:0}},"*"); // PIES - up to application to handle end of calibration 
-			window.postMessage( {target:"xLabs", payload:{calibrationClear:""}},"*");
-			window.postMessage( {target:"xLabs", payload:{calibrationsRequired:1}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{calibrationsCompleted:0}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{calibrationPolicy:"R"}}, "*" );
-		},
-
-		endCalibration:function(){
-		  window.postMessage( {target:"xLabs", payload:{calibrationPolicy:""}}, "*" );
-
-		  window.postMessage( {target:"xLabs", payload:{overlayMode:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{overlayEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{trackMouse:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{overlayEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{overlayMode:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{realtimeEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{validationEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{trackingEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{clicksEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{pinpointEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{captureKeyboard:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{realtimeEnabled:0}}, "*" );
-		  window.postMessage( {target:"xLabs", payload:{captureMouse:0}}, "*" );
-		},
-		beginTracking:function(){
-			window.postMessage( {target:"xLabs", payload:{overlayEnabled:0}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{realtimeEnabled:1}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{validationEnabled:1}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{trackingEnabled:1}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{pinpointEnabled:0}}, "*" );
-		},
-		endTracking:function(){
-			window.postMessage( {target:"xLabs", payload:{realtimeEnabled:0}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{validationEnabled:0}}, "*" );
-			window.postMessage( {target:"xLabs", payload:{trackingEnabled:0}}, "*" );
-			//window.postMessage( {target:"xLabs", payload:{pinpointEnabled:0}}, "*" );
-			
-			var debug = [];
-			debug.push('ymax: '+ Math.max.apply(Math,calib2015.stores.yaw) );
-			debug.push('ymin: '+ Math.min.apply(Math,calib2015.stores.yaw) );
-			debug.push('pmax: '+ Math.max.apply(Math,calib2015.stores.pitch) );
-			debug.push('pmin: '+ Math.min.apply(Math,calib2015.stores.pitch) );
-
-			this.$debug.html('<p>'+debug.join('</p><p>')+'</p>');
-		},
-		
-		simulateStart:function(){
-			this.simstart = Date.now();
-			this.simMode = true;
-			this.simData = wholeState;
-			this.simFps = this.simData[0].state.persistentUpdateFps;
-			this.simDataIdx = 0;
-			this.simulateTimeout()
-		},
-		
-		simulateStop:function(){
-			this.simMode = false;
-		},
-		
-	    simulateTimeout : function() {
-			var me = calib2015;
-			var timeNow = Date.now();
-			var timeElapsed = Math.max( 0, timeNow - me.simstart );
-			if(me.simData[me.simDataIdx].t - me.simData[0].t <= timeElapsed){
-				me.update(me.simData[me.simDataIdx].state);
-				me.simDataIdx++;
-			}
-			if(me.simMode && me.simDataIdx < me.simData.length){
-		      	setTimeout( me.simulateTimeout, 1000 / me.simFps );
-			}
-	    },
-		
-		instructionsStart:function(){
-			this.instructionMode = true;
-			this.instructStart = Date.now();
-			this.instructions = calibInstructions;
-			this.instructionsIdx = 0;
-			this.setUpInstructions();
-		},
-		updateInstructions:function(timeStamp){
-			this.instructionsIdx++;
-			if(this.instructionsIdx < this.instructions.length){
-				this.setUpInstructions();
-			}else{
-				this.instructionMode = false;
-			}
-		},
-		setUpInstructions:function(){
-			var removes = this.instructionsIdx > 0 ? this.getMessageClasses(this.instructions[this.instructionsIdx - 1]) : [] ;
-			var adds = this.getMessageClasses(this.instructions[this.instructionsIdx]);
-			this.instructions[this.instructionsIdx].start = Date.now();
-			this.$calibMessage.removeClass(removes.join(' ')).addClass(adds.join(' '));
-			this.$calibMessage.html(this.instructions[this.instructionsIdx].msg);
-		},
-		passCriteria:function(instructionObj){
-			if(!instructionObj.criteria){
-				return true;
-			}
-			switch(instructionObj.criteria.direction){
-				case 'up':
-				case 'down':
-					var pitchCat = this.categorisePitch(this.movingAverages[instructionObj.criteria.ma].pitch);
-					if(instructionObj.criteria.direction === pitchCat){
-						console.log(this.instructionsIdx,instructionObj,'Criteria passed',pitchCat);
-						return true;
-					}else{
-						//console.log(this.instructionsIdx,instructionObj,'Criteria Fail PitchCat:'+pitchCat+' != '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].pitch+ ' thresholds up:'+this.thresholdUp+' down:'+this.thresholdDown );
-					}
-					break;
-				case 'left':
-				case 'right':
-					var yawCat = this.categoriseYaw(this.movingAverages[instructionObj.criteria.ma].yaw);
-					if(instructionObj.criteria.direction === yawCat){
-						console.log(this.instructionsIdx,instructionObj,'Criteria passed',yawCat);
-						return true;
-					}else{
-						//console.log(this.instructionsIdx,instructionObj,'Criteria Fail YawCat:'+yawCat+' '+instructionObj.criteria.direction+' ma'+instructionObj.criteria.ma+':'+this.movingAverages[instructionObj.criteria.ma].yaw+ ' thresholds left:'+this.thresholdLeft+' right:'+this.thresholdRight );
-					}
-					break;
-			}
-			return false;
-		},
-		timedOut:function(instructionObj){
-			var now = Date.now();
-			return (now - instructionObj.expire > instructionObj.start);
-		},
-		failsequence:function(seq){
-			switch(seq){
-				case 'directionFail':
-					debugger;
-					//alert("todo: a fail message sequence, require user interaction to re-trigger the calib");
-					break;
-			}
-		},
-		getMessageClasses:function(instructionObj){
-			var clsArr = [this.msgBaseCls];
-			clsArr.push( (instructionObj.criteria ? this.msgBaseCls+"-"+instructionObj.criteria.direction : this.msgBaseCls+"-center") );
-			return clsArr;
-		},
-		getArrayAverage:function(arr, prevShiftVal, prevAvg){
-			var sum = 0;
-			for( var i = 0; i < arr.length; i++ ){
-			    sum += arr[i];
-			}
-			return sum / arr.length;
-		},
-		/* Save lots of loops and get the adjusted average */
-		getAdjustedAverage:function(pushed, shifted, prevAvg, len){
-			return prevAvg + ((shifted - pushed) / len);
-		},
-		categorisePitch:function(pitch){
-			var cat = "center";
-			if(pitch < this.thresholdUp){
-				cat = "up";
-			}else if(pitch > this.thresholdDown){
-				cat = "down";
-			}
-			return cat;
-		},
-
-		categoriseYaw:function(yaw){
-			var cat = "center";
-			if(yaw < this.thresholdRight){
-				cat = "right";
-			}else if(yaw > this.thresholdLeft){
-				cat = "left";
-			}
-			return cat;
-		},
-		
-	};
-
-	document.addEventListener( "xLabsApiReady", function() {
-		calib2015.onApiReady();
-	} );
-
-	document.addEventListener( "xLabsApiState", function( event ) {
-		calib2015.onApiState( event.detail );
-	} );
 	
 	var calibInstructions = [
 
 		{delay:2000, msg:"Hi there! Let's calibrate!"},
 		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
 		{delay:2000, msg:"Cool huh? Ok let's move on to the good stuff."},
-		{delay:1, expire:5000, msg:"Tilt your head up", criteria:{direction:"up", ma:4, success:"Awesome", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the right", criteria:{direction:"right", ma:4, success:"Excellent", delay:50, failsequence:"directionFail"} },
-		{delay:1, expire:15000, msg:"Tilt your head down", criteria:{direction:"down", ma:4, success:"Well done", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the left", criteria:{direction:"left", ma:4, success:"Good", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Tilt your head up", criteria:{type:"direction", direction:"up", ma:4, success:"Awesome", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Turn your head to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Excellent", delay:50, failsequence:"directionFail"} },
+		{delay:1, expire:15000, msg:"Tilt your head down", criteria:{type:"direction", direction:"down", ma:4, success:"Well done", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Turn your head to the left", criteria:{type:"direction", direction:"left", ma:4, success:"Good", delay:50, failsequence:"directionFail"}  },/*,
 		{delay:2000, msg:"You're doing great, don't forget to relax."},
-		{delay:1, expire:15000, msg:"Tilt up again", criteria:{direction:"up", ma:4, success:"Sweet", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Once more to the right", criteria:{direction:"right", ma:4, success:"Okay", delay:50, failsequence:"directionFail"} },
-		{delay:1, expire:15000, msg:"Tilt down", criteria:{direction:"down", ma:4, success:"Great", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn left", criteria:{direction:"left", ma:3, success:"Bang on.", delay:50, failsequence:"directionFail"}  },
-		{delay:4000, msg:"Cool bananas, that spot is now calibrated."},
+		{delay:1, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:50, failsequence:"directionFail"} },
+		{delay:1, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:50, failsequence:"directionFail"}  },
+		{delay:1, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:50, failsequence:"directionFail"}  },*/
+		{delay:4000, msg:"Cool bananas, let's check this spot is calibrated", criteria:{type:"calibrate", threshold:120, ma:2, success:"Spot on!", fail:"Hmm that doesn't look very accurate", failsequence:"calibrateFail"}},
 	];
 
 
