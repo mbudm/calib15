@@ -80,16 +80,16 @@
 		{delay:2000, msg:"Hi there! Let's calibrate!"},
 		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
 		{delay:2000, msg:"Cool huh? Ok let's move on to the good stuff."},
-		{delay:1, expire:15000, msg:"Tilt your head up", criteria:{type:"direction", direction:"up", ma:4, success:"Awesome", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Excellent", delay:50, failsequence:"directionFail"} },
-		{delay:1, expire:15000, msg:"Tilt your head down", criteria:{type:"direction", direction:"down", ma:4, success:"Well done", delay:50, failsequence:"directionFail"}  },
-		{delay:1, expire:15000, msg:"Turn your head to the left", criteria:{type:"direction", direction:"left", ma:4, success:"Good", delay:50, failsequence:"directionFail"}  },/*,
+		{delay:10, expire:15000, msg:"Tilt your head up", criteria:{type:"direction", direction:"up", ma:4, success:"Awesome", delay:50, failsequence:"directionFail"}  },
+		{delay:10, expire:15000, msg:"Turn your head to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Excellent", delay:50, failsequence:"directionFail"} },
+		{delay:10, expire:15000, msg:"Tilt your head down", criteria:{type:"direction", direction:"down", ma:4, success:"Well done", delay:50, failsequence:"directionFail"}  },
+		{delay:10, expire:15000, msg:"Turn your head to the left", criteria:{type:"direction", direction:"left", ma:4, success:"Good", delay:50, failsequence:"directionFail"}  },/*,
 		{delay:2000, msg:"You're doing great, don't forget to relax."},
 		{delay:1, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:50, failsequence:"directionFail"}  },
 		{delay:1, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:50, failsequence:"directionFail"} },
 		{delay:1, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:50, failsequence:"directionFail"}  },
 		{delay:1, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:50, failsequence:"directionFail"}  },*/
-		{delay:4000, msg:"Cool bananas, let's check this spot is calibrated", criteria:{type:"calibrate", threshold:120, ma:2, success:"Spot on!", fail:"Hmm that doesn't look very accurate", failsequence:"calibrateFail"}},
+		{delay:4000, msg:"Cool bananas, let's check this spot is calibrated", criteria:{type:"calibrate", threshold:120, ma:2, delay:50, success:"Spot on!", failsequence:"calibrateFail"}},
 	];
 
 
