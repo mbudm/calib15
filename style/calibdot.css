@@ -59,9 +59,10 @@ other positions
  height:20px;
  border-radius:10px;
  position:absolute;
- top:80px;
- left:80px;
+ /*top:80px;
+ left:80px;*/
 }
+/*
 .calibDot--userHead-up{top:0;bottom:auto;}
 .calibDot--userHead-down{bottom:0;top:auto;}
 .calibDot--userHead-left{left:0;right:auto;}
@@ -71,7 +72,7 @@ other positions
 .calibDot--userHead-up.calibDot--userHead-right{top:23px;left:23px;}
 .calibDot--userHead-down.calibDot--userHead-left{bottom:23px;left:23px;}
 .calibDot--userHead-down.calibDot--userHead-right{bottom:23px;right:23px;}
-
+*/
 
 .calibDot--message{
  display:table;
@@ -153,12 +154,12 @@ other positions
  
  .calibDebugger{
 	 position:absolute;
-	 top:0;
+	 bottom:0;
 	 right:0;
 	 font-size:1em;
 	 font-family:monospace;
-	 width:50%;
-	 height:80%;
+	 width:90%;
+	 height:50%;
 	 padding:20px;
 	 display:block;
  }
