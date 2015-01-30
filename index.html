@@ -51,17 +51,21 @@
 			switch( event.which) {
 				case 88: //x
 					xlabs.calib.proxy.off();
+					
+					//console.log(JSON.stringify(xlabs.calib.ui.log))
 					break;
 				case 83: //s
 					xlabs.calib.proxy.on();
 					xlabs.calib.ui.instructionsStart();
 					break;
 				case 65: //a
-					xlabs.calib.ui.simulateStart(wholeState);
+					xlabs.calib.proxy.simMode(true);
+					xlabs.calib.ui.simulateStart(slim_calib);
 					xlabs.calib.ui.instructionsStart();
 					break;
 				case 90: //z
 					xlabs.calib.ui.simulateStop();
+					xlabs.calib.proxy.simMode(false);
 					break;
 			}
 		});
@@ -206,6 +210,6 @@
 	}
 
 	</script>
-	<script type="text/javascript" src="data/logs.js"></script>
+	<script type="text/javascript" src="data/slim_calib.js"></script>
 	</body>
 </html>
