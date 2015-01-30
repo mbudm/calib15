@@ -54,7 +54,7 @@ other positions
  z-index:-1;
 }
 .calibDot--userHead{
- background:#ff0;
+ background: rgba(230,230,0,0.6); /*url('/img/rotate_8points_sprite.jpg') no-repeat -12px -5px;*/
  width:20px;
  height:20px;
  border-radius:10px;
@@ -135,7 +135,7 @@ other positions
  .gazeDot{
  	 position:absolute;
  	 display:none;
-	 background: rgba(0,150,0,0.5); /*url('/img/rotate_8points_sprite.jpg') no-repeat -12px -5px;*/
+	 background: rgba(0,150,0,0.5); 
 	 width:40px;
 	 height:40px;
 	 border-radius:20px;
@@ -149,6 +149,18 @@ other positions
  }
  
  
+ /* screen msg */
+ .screenMessage{
+ 	 position:absolute;
+	 top:45%;
+	 width:100%;
+	 text-align:center;
+	 font-family:Georgia, serif;
+	 font-weight:bold;
+	 color:#888;
+	 font-size:3em;
+ }
+ 
  
  /* debugger */
  
@@ -161,5 +173,6 @@ other positions
 	 width:90%;
 	 height:50%;
 	 padding:20px;
-	 display:block;
+	 display:none;
  }
+ 
