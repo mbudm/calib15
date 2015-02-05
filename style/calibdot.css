@@ -63,6 +63,7 @@ other positions
  height:20px;
  border-radius:10px;
  position:absolute;
+ display:none;
  /*top:80px;
  left:80px;*/
 }
@@ -187,6 +188,28 @@ other positions
  }
  .stateDebugger{
 	 right:2%;
+	 left:auto;
+ }
+ 
+ .calibDot-topright .stateDebugger{
+	 left:2%;
+	 right:auto;
+ }
+ .calibDot-bottomleft .stateDebugger{
+	 right:2%;
+	 left:auto;
+ }
+ .calibDot-bottomright .stateDebugger{
+	 left:2%;
+	 right:auto;
+ }
+ .calibDot-center .stateDebugger{
+	 left:2%;
+	 right:auto;
+ }
+ .calibDot-center .calibDebugger{
+	 right:2%;
+	 left:auto;
  }
  
  /* status */
