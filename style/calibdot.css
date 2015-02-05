@@ -68,7 +68,7 @@ other positions
 }
 
 .calibDot--userHead.error{
-	background-color: rgba(230,0,0,0.4); 
+	background-color: rgba(230,120,0,0.4); 
 }
 
 /*
@@ -183,7 +183,7 @@ other positions
 	 width:30%;
 	 height:95%;
 	 padding:0 20px;
-	 display:none;
+	 /*display:none;*/
  }
  .stateDebugger{
 	 right:2%;
@@ -202,6 +202,7 @@ other positions
 	 margin-left:0;
 	 padding-left:0;
 	 background:rgba(255,255,255,0.5);
+	 display:none;
  }
   .status li{
 	  padding:0.3em;
