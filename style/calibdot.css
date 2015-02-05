@@ -3,6 +3,8 @@
 .calibDot{
 	 position:absolute;
 	 display:none;
+	 width:180px;
+	 height:180px;
 }
 
 .calib-active .calibDot{
@@ -54,7 +56,9 @@ other positions
  z-index:-1;
 }
 .calibDot--userHead{
- background: rgba(230,230,0,0.6); /*url('/img/rotate_8points_sprite.jpg') no-repeat -12px -5px;*/
+ background-color: rgba(230,230,0,0.6); /*url('/img/rotate_8points_sprite.jpg') no-repeat -12px -5px;*/
+
+ transition: background-color 0.5s ease;
  width:20px;
  height:20px;
  border-radius:10px;
@@ -62,6 +66,11 @@ other positions
  /*top:80px;
  left:80px;*/
 }
+
+.calibDot--userHead.error{
+	background-color: rgba(230,0,0,0.4); 
+}
+
 /*
 .calibDot--userHead-up{top:0;bottom:auto;}
 .calibDot--userHead-down{bottom:0;top:auto;}
@@ -103,7 +112,6 @@ other positions
 }
 
 .calibDot--message-up{
- margin-top:-5%;
  text-align:center;
  width:100%;
  
@@ -136,7 +144,7 @@ other positions
  .gazeDot{
  	 position:absolute;
  	 display:none;
-	 background: rgba(0,150,0,0.5); 
+	 background-color: rgba(0,150,0,0.5); 
 	 width:40px;
 	 height:40px;
 	 border-radius:20px;
@@ -144,7 +152,7 @@ other positions
 	 left:0;
 	 z-index:1;
  }
- 
+
  .gaze-active .gazeDot{
  	display:block;
  }
@@ -166,15 +174,57 @@ other positions
  
  /* debugger */
  
- .calibDebugger{
+ .calibDebugger, .stateDebugger{
 	 position:absolute;
-	 bottom:0;
-	 right:0;
-	 font-size:1em;
+	 top:2.5%;
+	 right:35%;
+	 font-size:0.9em;
 	 font-family:monospace;
-	 width:90%;
-	 height:50%;
-	 padding:20px;
+	 width:30%;
+	 height:95%;
+	 padding:0 20px;
 	 display:none;
  }
+ .stateDebugger{
+	 right:2%;
+ }
+ 
+ /* status */
+ .status{
+	 position:absolute;
+	 left:0;
+	 top:40%;
+	 font-family: Arial;
+	 font-size:13px;
+	 list-style:none;
+	 width:400px;
+	 border:1px solid #ccc;
+	 margin-left:0;
+	 padding-left:0;
+	 background:rgba(255,255,255,0.5);
+ }
+  .status li{
+	  padding:0.3em;
+	  border-top:1px solid #ccc;
+  }
+  .status span{
+	  display:inline-block;
+  }
+  
+  .status .property{
+	  width:250px;
+  }
+  .status .value{
+	  width:100px;
+  }
+ 
+ .status .valid{
+	 color:#0f0;
+ }
+ 
+ .status .invalid{
+
+	 color:#f00;
+ }
+ 
  
