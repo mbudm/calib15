@@ -7,6 +7,11 @@
 		 <link href="style/calibdot.css" media="all" rel="stylesheet" />
 	</head>
 	<body>
+	
+	<div class="debuggers">
+		<textarea class="calibDebugger"></textarea>
+		<textarea class="stateDebugger"></textarea>
+	</div>
 	<button class="start">Start</button>
 	<div class="calibDot">
 		<div class="calibDot--inner">
@@ -18,13 +23,6 @@
 	<div class="gazeDot"></div>
 	<div class="screenMessage"></div>
 	
-	<div class="debuggers">
-		<textarea class="calibDebugger"></textarea>
-		<textarea class="stateDebugger"></textarea>
-		<ul class="status">
-		
-		</ul>
-	</div>
 	<script type="text/javascript">
 	
 	
@@ -117,6 +115,10 @@
 		{delay:1000, expire:15000, msgTarget:"screen", msg:"Cool bananas, now see if you can move the green dot. To do this you just need to move your eyes", criteria:{type:"calibrate-basic", threshold:100, ma:2, delay:4000, success:"Great, that's plenty of movement.", failsequence:"calibrateFail"}},
 		//check for some broad movement - eg top left quadrant
 		// if timeout redo # times
+		
+		// Use: 
+		// kvCalibrationClicks	- The total number of user clicks suitable for calibration that have been logged over all time, for the current user.
+		// kvCalibrationClicksUncalibrated  - The number of user clicks suitable for calibration that have been logged since the last calibration event.
 		// then show environment
 		// then show contact us
 		
