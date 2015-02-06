@@ -104,8 +104,9 @@
 	*/
 	var calibInstructions = [
 		{delay:1,task:{ method:'setCalibVisible', param:false}},
-		{delay:1,task:{ method:'setScreenMessage', param:"Hi there! Let's calibrate!"}},
-		//{delay:500,task:{ method:'captureCentrePosition', ma:2 }},
+		{delay:1,task:{ method:'setScreenMessage', param:"Hi!"}},
+		{delay:1500,task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
+		{delay:500,task:{ method:'captureCentrePosition', param:2 }},
 		{delay:2500, task:{ method:'setCalibPosition', param:'topleft' }},
 		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
 		{delay:3000, msg:"If the dot turns red, that means, 'Easy tiger'"},
