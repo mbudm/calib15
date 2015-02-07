@@ -1,6 +1,6 @@
 /* start */
 
-.start{
+.start,.sim-start{
 	 position:absolute;
 	 top:45%;
 	 left:50%;
@@ -13,12 +13,15 @@
 	 font-size:24px;
 	 color:#040;
 }
-.start:hover{
+.start:hover,.sim-start:hover{
 	background:#060;
  	color:#cfc;
 	cursor:pointer;
 }
-
+.sim-start{
+	top:auto;
+	bottom:5%;
+}
 /* calibDot */
 
 .calibDot{
