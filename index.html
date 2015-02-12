@@ -136,14 +136,23 @@
 			{delay:1, expire:20000, msgTarget:"bottom", msg:"Looks like the camera needs you're help", criteria:{type:"environment", ma:2, delay:3000, failsequence:"failcomplete"}},
 			{delay:1,task:{ method:'showFeedback', param:false }}
 		],
-		direction:[],
-		calibrate:[],
+		direction:[
+			{delay:1,task:{ method:'setScreenMessage', param:"This is the direction failure sequence. It will now stop calibration, but in future will do something more clever"}},
+			{delay:1,task:{ method:'stopCalibration' }}
+		],
+		calibrate:[
+			{delay:1,task:{ method:'setScreenMessage', param:"This is the calibrate failure sequence. It will now stop calibration, but in future will do something more clever"}},
+			{delay:1,task:{ method:'stopCalibration' }}
+		],
 		failcomplete:[
 			{delay:1,task:{ method:'setScreenMessage', param:"Bummer dude, looks like we can't calibrate you today. Maybe try a different location?. Check out our location and environment guides"}},
 			{delay:1,task:{ method:'showHelp', param:true}},
 			{delay:1,task:{ method:'stopCalibration' }}
 		],
-		successcomplete:[]
+		successcomplete:[
+			{delay:1,task:{ method:'setScreenMessage', param:"This is the success sequence"}},
+			{delay:1,task:{ method:'stopCalibration' }}
+		]
 	};
 	var calibInstructions = [
 		{delay:2000,task:{ method:'setScreenMessage', param:"Hi!"}},
