@@ -208,6 +208,7 @@ other positions
 	left:0;
 	width:100%;
 	height:100%;
+	display:none;
 }
 .videoFrame{
 	width:100%;
@@ -225,22 +226,23 @@ other positions
 }
 
 .feedback-messages{
-	position:absolute
+	position:absolute;
 	top:5%;
 	left:5%;
-	 font-family: Arial;
-	 font-size:13px;
-	 list-style:none;
-	 width:400px;
-	 border:1px solid #ccc;
-	 margin-left:0;
-	 padding-left:0;
-	 background:rgba(255,255,255,0.5);
-	 display:none;
+	font-family: Arial;
+	font-size:13px;
+	list-style:none;
+	width:30%;
+	border:1px solid #ccc;
+	margin-left:0;
+	padding-left:0;
+	background:rgba(255,255,255,0.5);
 }
 .feedback-messages li{
-	  padding:0.3em;
-	  border-top:1px solid #ccc;
+	padding:0.3em;
+}
+.feedback-messages .error{
+	color:#f00;
 }
 
 /* help */
