@@ -75,8 +75,12 @@
 		});
 		
 		$('.sim-start').on( "click", function(e){
+			
+			xlabs.calib.ui.start(e,testDot);
+			/*
 			xlabs.calib.proxy.simMode(true);
 			xlabs.calib.ui.simulateStart(slim_calib_2dots,e,calibInstructions,sequences);
+			*/
 			//xlabs.calib.ui.instructionsStart();
 		});
 
@@ -154,11 +158,19 @@
 			{delay:1,task:{ method:'stopCalibration' }}
 		]
 	};
+	
+	var testDot  = [
+		{delay:2500, msgTarget:"screen", msg:"Test a dot."},
+		{delay:2500, task:{ method:'setCalibPosition', param:'center' }},
+		{delay:500, task:{ method:'captureCenter', param:2 }},
+		{delay:2000000, msg:"Test me"}
+	];
 	var calibInstructions = [
-		{delay:2000,task:{ method:'setScreenMessage', param:"Hi!"}},
+		{delay:1500, msgTarget:"screen", msg:""},
+		{delay:2500, msgTarget:"screen", msg:"Hi."},
 		{delay:2500, expire:2000, msgTarget:"screen", msg:"Make sure you're comfortable and we'll begin.", criteria:{type:"environment", ma:0, success:"You're a chilled out cookie huh? Great.", delay:1500, failsequence:"environment"}  },
-		{delay:1500,task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
-		{delay:500,task:{ method:'captureCenter', param:2 }},
+		{delay:1500, task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
+		{delay:500, task:{ method:'captureCenter', param:2 }},
 		{delay:2500, task:{ method:'setCalibPosition', param:'topleft' }},
 		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
 		{delay:3000, msg:"If the dot turns red, that means, 'Easy tiger'"},
@@ -169,7 +181,7 @@
 		{delay:500, expire:15000, msg:"Tilt your head down", criteria:{type:"direction", direction:"down", ma:4, success:"Well done", delay:500, failsequence:"direction"}  },
 		{delay:500, expire:15000, msg:"Turn your head to the left", criteria:{type:"direction", direction:"left", ma:4, success:"Good", delay:500, failsequence:"direction"}  },
 		{delay:1,task:{ method:'setCalibVisible', param:false}},
-		{delay:500, expire:15000, msgTarget:"screen", msg:"Cool bananas, you've calibrated the top left, next we'll calibrate top right", criteria:{type:"calibrate-basic", threshold:100, ma:2, delay:4000, success:"You're doing great, don't forget to relax.", failsequence:"calibrate"}},
+		{delay:500, expire:15000, msgTarget:"screen", msg:"Cool bananas, you've calibrated the top left, next we'll calibrate top right", criteria:{type:"calibrate-basic", threshold:0.05, ma:2, delay:4000, success:"You're doing great, don't forget to relax.", failsequence:"calibrate"}},
 		//check for some broad movement - eg top left quadrant
 		// if timeout redo # times
 		
@@ -185,7 +197,7 @@
 		{delay:500, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:500, failsequence:"direction"} },
 		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:500, failsequence:"direction"}  },
 		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:500, failsequence:"direction"}  },
-		{delay:4000, expire:15000, msg:"Okidoke, now look here for a sec.", criteria:{type:"calibrate", threshold:150, ma:0, delay:2000, success:"Thanks!", failsequence:"calibrate"}},
+		{delay:4000, expire:15000, msg:"Okidoke, now look here for a sec.", criteria:{type:"calibrate", threshold:0.1, ma:0, delay:2000, success:"Thanks!", failsequence:"calibrate"}},
 		
 		//check for some broad movement - eg move top left to top right
 		// if timeout redo 1 time
