@@ -30,6 +30,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="help">This is help, will provide links to guides etc.</div>
 	<button class="start">Start</button>
 	<button class="sim-start">Sim Start</button>
 	<script type="text/javascript">
@@ -69,11 +70,13 @@
 			}
 		};
 		
-		$('.start').on( "click", $.proxy( xlabs.calib.ui.start, xlabs.calib.ui ) );
+		$('.start').on( "click", function(e){
+			xlabs.calib.ui.start(e,calibInstructions,sequences);
+		});
 		
 		$('.sim-start').on( "click", function(e){
 			xlabs.calib.proxy.simMode(true);
-			xlabs.calib.ui.simulateStart(slim_calib_2dots,e);
+			xlabs.calib.ui.simulateStart(slim_calib_2dots,e,calibInstructions,sequences);
 			//xlabs.calib.ui.instructionsStart();
 		});
 
@@ -131,20 +134,20 @@
 		environment:[
 			{delay:1,task:{ method:'showFeedback', param:true}},
 			{delay:1, expire:15000, msgTarget:"bottom", msg:"Looks like the camera needs you're help", criteria:{type:"environment", ma:2, delay:2500, failsequence:"failcomplete"}},
-			{delay:1,task:{ method:'showFeedback', param:false }},
-			{delay:1,task:{ method:'returnToInstructions', param:{repeat:false} } }
+			{delay:1,task:{ method:'showFeedback', param:false }}
 		],
 		direction:[],
 		calibrate:[],
 		failcomplete:[
 			{delay:1,task:{ method:'setScreenMessage', param:"Bummer dude, looks like we can't calibrate you today. Maybe try a different location?. Check out our location and environment guides"}},
-			{delay:1,task:{ method:'showHelp'}}
+			{delay:1,task:{ method:'showHelp', param:true}},
+			{delay:1,task:{ method:'stopCalibration' }}
 		],
 		successcomplete:[]
 	};
 	var calibInstructions = [
-		{delay:1000,task:{ method:'setScreenMessage', param:"Hi!"}},
-		{delay:1500, expire:2000, msg:"Make sure you're comfortable and we'll begin.", criteria:{type:"environment", ma:0, success:"You're a chilled out cookie huh? Great.", delay:1500, failsequence:"environment"}  },
+		{delay:2000,task:{ method:'setScreenMessage', param:"Hi!"}},
+		{delay:2500, expire:2000, msgTarget:"screen", msg:"Make sure you're comfortable and we'll begin.", criteria:{type:"environment", ma:0, success:"You're a chilled out cookie huh? Great.", delay:1500, failsequence:"environment"}  },
 		{delay:1500,task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
 		{delay:500,task:{ method:'captureCenter', param:2 }},
 		{delay:2500, task:{ method:'setCalibPosition', param:'topleft' }},

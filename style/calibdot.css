@@ -221,6 +221,7 @@ other positions
 }
 .video--feed{
 	position:relative;
+	display:inline-block;
 }
 
 .feedback-messages{
@@ -242,6 +243,17 @@ other positions
 	  border-top:1px solid #ccc;
 }
 
+/* help */
+.help{
+	positon:absolute;
+	top:5%;
+	left:5%;
+	width:90%;
+	height:90%;
+	display:none;
+	font-size:2.4em;
+}
+
  
  
  /* debugger */
@@ -254,7 +266,7 @@ other positions
 	 width:30%;
 	 height:95%;
 	 padding:0 20px;
-	 /*display:none;*/
+	 display:none;
  }
  .stateDebugger{
 	 right:2%;
