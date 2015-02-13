@@ -1,0 +1,58 @@
+<html>
+	<head>
+		 <title>Calib dot pos test</title>
+	     <script type="text/javascript" src="lib/calibration/ui.js"></script>
+	     <script type="text/javascript" src="lib/jquery-1.11.1.js"></script>
+		 <link href="style/calibdot.css" media="all" rel="stylesheet" />
+	</head>
+	<body>
+	
+	
+	<div class="calibDot">
+		<div class="calibDot--inner">
+			<div class="calibDot--bg"></div>
+			<div class="calibDot--userHead"></div>
+			<div class="calibDot--message"><div class="calibDot--message--inner"><span class="text"></span></div></div>
+		</div>
+	</div>
+	
+	<div calss="controls">
+		<p><label>Pitch: <input id="pitch" type="text" /></label> <label>Yaw: <input id="yaw" type="text" /></label> <button id="update">Update</button><p>
+		<h4>Values:</h4>
+		<div class="values"></div>
+	</div>
+	
+	<script type="text/javascript">
+	
+	$(function() {
+		calibUi.setup();
+		calibUi.setCalibPosition('center');
+		calibUi.setCalibVisible(true);
+		
+		//sample data
+		calibUi.limits =  {"left":0.54274863,"right":-0.613681316,"up":-0.103851147,"down":0.612964928};
+		calibUi.overExtend =  {"down":0.57712412425,"up":-0.06801034325,"left":0.4849271327,"right":-0.5558598187};
+		calibUi.snap =  {"down":0.43376090925,"up":0.07535287175,"left":0.2536411435,"right":-0.3245738295};
+		calibUi.thresholds =  {"down":0.3979201055,"up":0.11119367549999998,"left":0.19581964620000003,"right":-0.26675233220000005};
+		calibUi.currentCenter =  {"pitch":0.3896027210000001,"yaw":-0.03546634300000001};
+		calibUi.movingAverages =  [{"ma":5,"yaw":-0.0907837972,"pitch":0.0577714965,"val":{"d":0.2,"b":0,"f":0.8,"r":0,"u":0.2},"x":442,"y":645,"xmin":442,"xmax":645,"ymin":442,"ymax":645,"gazeScore":0.5714285714285714},{"ma":10,"yaw":-0.055830633250000004,"pitch":0.18350959925000002,"val":{"d":0.1,"b":0,"f":0.9,"r":0,"u":0.1},"x":442,"y":645,"xmin":442,"xmax":645,"ymin":442,"ymax":645,"gazeScore":0.5714285714285713},{"ma":15,"yaw":-0.0441795786,"pitch":0.22542230016666667,"val":{"d":0.06666666666666667,"b":0,"f":0.9333333333333333,"r":0,"u":0.06666666666666667},"x":442,"y":645,"xmin":442,"xmax":645,"ymin":442,"ymax":645,"gazeScore":0.5714285714285713},{"ma":20,"yaw":-0.038354051275,"pitch":0.24637865062500003,"val":{"d":0.05,"b":0,"f":0.95,"r":0,"u":0.05},"x":442,"y":645,"xmin":442,"xmax":645,"ymin":442,"ymax":645,"gazeScore":0.5714285714285713},{"ma":25,"yaw":-0.03485873488,"pitch":0.2589524609000001,"val":{"d":0.04,"b":0,"f":0.96,"r":0,"u":0.04},"x":442,"y":645,"xmin":442,"xmax":645,"ymin":442,"ymax":645,"gazeScore":0.5714285714285713}]
+		
+		
+		$('#update').on('click', function(e){
+			var p = $('#pitch').val();
+			var y = $('#yaw').val();
+			calibUi.positionUserHead(p,y);
+		})
+		
+		
+		$('.values').html('<p>Limits: '+ calibUi.printMe(calibUi.limits) +'</p><p> Center:'+calibUi.printMe(calibUi.currentCenter) +'</p><p> Snap:'+calibUi.printMe(calibUi.snap) +'</p><p> overExtend:'+calibUi.printMe(calibUi.overExtend) +'</p>');
+		
+		calibUi.$btns.show();
+		
+
+		  
+	});
+	</script>
+	
+	</body>
+</html>
