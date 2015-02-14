@@ -32,7 +32,7 @@
 	</div>
 	<div class="help">This is help, will provide links to guides etc.</div>
 	<button class="start">Start</button>
-	<button class="sim-start">Sim Start</button>
+	<!--<button class="sim-start">Sim Start</button>-->
 	<script type="text/javascript">
 	
 	
@@ -161,6 +161,7 @@
 	
 	var testDot  = [
 		{delay:2500, msgTarget:"screen", msg:"Test a dot."},
+		{delay:1500, task:{ method:'setCaptureCenter', param:true } },
 		//{delay:500, task:{ method:'captureCenter', param:2 }},
 		{delay:2500, task:{ method:'setCalibPosition', param:'center' }},
 		{delay:2000000, msg:"Test me"}
@@ -168,10 +169,10 @@
 	var calibInstructions = [
 		{delay:1500, msgTarget:"screen", msg:""},
 		{delay:2500, msgTarget:"screen", msg:"Hi."},
-		{delay:2500, expire:2000, msgTarget:"screen", msg:"Make sure you're comfortable and we'll begin.", criteria:{type:"environment", ma:0, success:"You're a chilled out cookie huh? Great.", delay:1500, failsequence:"environment"}  },
+		{delay:1500, task:{ method:'setCaptureCenter', param:true } },
+		{delay:2500, expire:2000, msgTarget:"screen", msg:"Make sure you're comfortable and we'll begin.", criteria:{type:"environment", ma:1, success:"You're a chilled out cookie huh? Great.", delay:1500, failsequence:"environment"}  },
 		{delay:1500, task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
-		{delay:500, task:{ method:'captureCenter', param:2 }},
-		{delay:2500, task:{ method:'setCalibPosition', param:'topleft' }},
+		{delay:2500, task:{ method:'setCalibPosition', param:'center' }},
 		{delay:4000, msg:"Practice a bit. Move the yellow dot by gently turning and tilting your head"},
 		{delay:3000, msg:"If the dot turns red, that means, 'Easy tiger'"},
 		{delay:3000, msg:"The trick is to use small gentle movements"},
@@ -181,7 +182,9 @@
 		{delay:500, expire:15000, msg:"Tilt your head down", criteria:{type:"direction", direction:"down", ma:4, success:"Well done", delay:500, failsequence:"direction"}  },
 		{delay:500, expire:15000, msg:"Turn your head to the left", criteria:{type:"direction", direction:"left", ma:4, success:"Good", delay:500, failsequence:"direction"}  },
 		{delay:1,task:{ method:'setCalibVisible', param:false}},
-		{delay:500, expire:15000, msgTarget:"screen", msg:"Cool bananas, you've calibrated the top left, next we'll calibrate top right", criteria:{type:"calibrate-basic", threshold:0.05, ma:2, delay:4000, success:"You're doing great, don't forget to relax.", failsequence:"calibrate"}},
+
+		{delay:1500, task:{ method:'setCaptureCenter', param:false } },
+		{delay:500, expire:15000, msgTarget:"screen", msg:"Cool bananas, you've calibrated the center, next we'll calibrate top right", criteria:{type:"calibrate-basic", threshold:0.05, ma:2, delay:4000, success:"You're doing great, don't forget to relax.", failsequence:"calibrate"}},
 		//check for some broad movement - eg top left quadrant
 		// if timeout redo # times
 		
@@ -193,11 +196,11 @@
 		
 		{delay:2000,task:{ method:'setCalibPosition', param:'topright'}},
 		{delay:2000, msg:"Let's calibrate this spot."},
-		{delay:500, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:500, failsequence:"direction"} },
-		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:500, failsequence:"direction"}  },
-		{delay:4000, expire:15000, msg:"Okidoke, now look here for a sec.", criteria:{type:"calibrate", threshold:0.1, ma:0, delay:2000, success:"Thanks!", failsequence:"calibrate"}},
+		{delay:500, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:2, success:"Sweet", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:2, success:"Okay", delay:500, failsequence:"direction"} },
+		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:2, success:"Great", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:2, success:"Bang on.", delay:500, failsequence:"direction"}  },
+		{delay:4000, expire:15000, msg:"Okidoke, now look here for a sec.", criteria:{type:"calibrate", threshold:0.25, ma:0, delay:2000, success:"Thanks!", failsequence:"calibrate"}},
 		
 		//check for some broad movement - eg move top left to top right
 		// if timeout redo 1 time
@@ -208,29 +211,29 @@
 		{delay:1,task:{ method:'setScreenMessage', param:"Woohoo! 2 down, 3 to go."}},
 		{delay:2000,task:{ method:'setCalibPosition', param:'bottomright'}},
 		{delay:2000, msg:"Get ready to roll."},
-		{delay:500, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:500, failsequence:"direction"} },
-		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:500, failsequence:"direction"}  },
-		{delay:4000, expire:15000, msg:"And look at moi", criteria:{type:"calibrate", threshold:150, ma:0, delay:2000, success:"Super!", failsequence:"calibrate"}},
+		{delay:500, expire:15000, msg:"Tilt up again", criteria:{type:"direction", direction:"up", ma:2, success:"Sweet", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Once more to the right", criteria:{type:"direction", direction:"right", ma:2, success:"Okay", delay:500, failsequence:"direction"} },
+		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:2, success:"Great", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:2, success:"Bang on.", delay:500, failsequence:"direction"}  },
+		{delay:4000, expire:15000, msg:"And look at moi", criteria:{type:"calibrate", threshold:0.25, ma:0, delay:2000, success:"Super!", failsequence:"calibrate"}},
 		{delay:1,task:{ method:'setCalibVisible', param:false}},
 		{delay:1,task:{ method:'setScreenMessage', param:"Top stuff, 2 more spots to go."}},
 		{delay:2000,task:{ method:'setCalibPosition', param:'bottomleft'}},
 		{delay:2000, msg:"Over here"},
-		{delay:500, expire:15000, msg:"Tilt up ", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"To the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:500, failsequence:"direction"} },
-		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:500, failsequence:"direction"}  },
-		{delay:4000, expire:15000, msg:"Lastly, look into the grey abyss", criteria:{type:"calibrate", threshold:150, ma:0, delay:2000, success:"Wunderbar!", failsequence:"calibrate"}},
+		{delay:500, expire:15000, msg:"Tilt up ", criteria:{type:"direction", direction:"up", ma:2, success:"Sweet", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"To the right", criteria:{type:"direction", direction:"right", ma:2, success:"Okay", delay:500, failsequence:"direction"} },
+		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:2, success:"Great", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:2, success:"Bang on.", delay:500, failsequence:"direction"}  },
+		{delay:4000, expire:15000, msg:"Lastly, look into the grey abyss", criteria:{type:"calibrate", threshold:0.25, ma:0, delay:2000, success:"Wunderbar!", failsequence:"calibrate"}},
 		{delay:1,task:{ method:'setCalibVisible', param:false}},
-		{delay:1,task:{ method:'setScreenMessage', param:"One last dot, in the center this time."}},
-		{delay:2000,task:{ method:'setCalibPosition', param:'center'}},
+		{delay:1,task:{ method:'setScreenMessage', param:"One last dot, in the top left this time."}},
+		{delay:2000,task:{ method:'setCalibPosition', param:'topleft'}},
 		{delay:2000, msg:"This will be easy."},
-		{delay:500, expire:15000, msg:"Tilt up ", criteria:{type:"direction", direction:"up", ma:4, success:"Sweet", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"To the right", criteria:{type:"direction", direction:"right", ma:4, success:"Okay", delay:500, failsequence:"direction"} },
-		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:4, success:"Great", delay:500, failsequence:"direction"}  },
-		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:3, success:"Bang on.", delay:500, failsequence:"direction"}  },
-		{delay:4000, expire:15000, msg:"Send your peepers over here", criteria:{type:"calibrate", threshold:150, ma:0, delay:2000, success:"Boo-ya!", failsequence:"calibrate"}},
+		{delay:500, expire:15000, msg:"Tilt up ", criteria:{type:"direction", direction:"up", ma:2, success:"Sweet", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"To the right", criteria:{type:"direction", direction:"right", ma:2, success:"Okay", delay:500, failsequence:"direction"} },
+		{delay:500, expire:15000, msg:"Tilt down", criteria:{type:"direction", direction:"down", ma:2, success:"Great", delay:500, failsequence:"direction"}  },
+		{delay:500, expire:15000, msg:"Turn left", criteria:{type:"direction", direction:"left", ma:2, success:"Bang on.", delay:500, failsequence:"direction"}  },
+		{delay:4000, expire:15000, msg:"Send your peepers over here", criteria:{type:"calibrate", threshold:0.25, ma:0, delay:2000, success:"Boo-ya!", failsequence:"calibrate"}},
 		{delay:1,task:{ method:'setGazeDotVisible', param:true}},
 		{delay:1,task:{ method:'setScreenMessage', param:"All done, you're calibrated! The green dot is controlled by your eye movement. Cool huh?"}},
 	];
