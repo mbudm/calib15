@@ -79,7 +79,7 @@
 			//xlabs.calib.ui.start(e,testDot);
 			/**/
 			xlabs.calib.proxy.simMode(true);
-			xlabs.calib.ui.simulateStart(slim_calib_2dots,e,calibInstructions,sequences);
+			xlabs.calib.ui.simulateStart(gaze_fail_low_light,e,calibInstructions,sequences);
 			
 			//xlabs.calib.ui.instructionsStart();
 		});
@@ -169,7 +169,7 @@
 	var calibInstructions = [
 		{delay:1500, msgTarget:"screen", msg:"Hi."},
 		{delay:1, task:{ method:'setCaptureCenter', param:true } },
-		{delay:3000, expire:2000, msgTarget:"screen", msg:"Make sure you're comfortable.", criteria:{type:"environment", ma:1, success:"You're a chilled out cookie huh? Great.", delay:2000, failsequence:"environment"}  },
+		{delay:3000, expire:3000, msgTarget:"screen", msg:"Make sure you're comfortable.", criteria:{type:"environment", ma:1, success:"You're a chilled out cookie huh? Great.", delay:2000, failsequence:"environment"}  },
 		{delay:1, task:{ method:'setScreenMessage', param:"Let's calibrate!"}},
 		{delay:1500, task:{ method:'setCalibPosition', param:'center' }},
 		{delay:3000, msg:"Firstly, let's do a warm up."},
@@ -309,6 +309,7 @@
 	}
 
 	</script>
-	<script type="text/javascript" src="data/slim_calib_2dots.js"></script>
+	<!-- sim data -->
+	<script type="text/javascript" src="data/gaze_fail_low_light.js"></script>
 	</body>
 </html>
