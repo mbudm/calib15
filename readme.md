@@ -5,94 +5,94 @@ Modules
 # config
 
 ## head
-pitchMaxProp: "down"
-pitchMinProp: "up"
-pitchProp: "kvHeadY"
-yawMaxProp: "left"
-yawMinProp: "right"
-yawProp: "kvHeadX"
+* pitchMaxProp: "down"
+* pitchMinProp: "up"
+* pitchProp: "kvHeadY"
+* yawMaxProp: "left"
+* yawMinProp: "right"
+* yawProp: "kvHeadX"
 
 	
 	
 # controllers
 
 ## main
-isTracking: false
-update: function (state){
-onApiState: function ( state ){
-setup: function (){
-start: function (e,mainInstructions, subSequences){
-stopCalibration: function (){
+* isTracking: false
+* update: function (state){
+* onApiState: function ( state ){
+* setup: function (){
+* start: function (e,mainInstructions, subSequences){
+* stopCalibration: function (){
 	
 ### dependencies
--- document ("xLabsApiReady","xLabsApiState)
+* document ("xLabsApiReady","xLabsApiState)
 
 ### listeners
--- util.proxy ("xlabson", "xlabsoff")
-"update"
--- controller.gaze
--- controller.instructions
+* util.proxy ("xlabson", "xlabsoff")
+* "update"
+    * controller.gaze
+    * controller.instructions
 
 
 
 ## instructions
-setUpInstructions: function (){
-checkInstructions: function (){
-fireCriteriaSuccessEvent: function (instructionObj){
-instructionsStart: function (){
-passCriteria: function (instructionObj){
+* setUpInstructions: function (){
+* checkInstructions: function (){
+* fireCriteriaSuccessEvent: function (instructionObj){
+* instructionsStart: function (){
+* passCriteria: function (instructionObj){
 
 ### dependencies
--- controller.main ("start","update", "stop")
--- model.sequenceSet ("instruction.next")
--- controller.head ("categorisePitch") // services
--- controller.gaze ("gazeAccuracy", "gazeMovement") // services
--- controller.feedback ("checkEnvironment") // service
--- model.movingAverages ("pitch", "yaw", "gazeScore")
--- util.math ("timedOut") //service
+* controller.main ("start","update", "stop")
+* model.sequenceSet ("instruction.next")
+* controller.head ("categorisePitch") // services
+* controller.gaze ("gazeAccuracy", "gazeMovement") // services
+* controller.feedback ("checkEnvironment") // service
+* model.movingAverages ("pitch", "yaw", "gazeScore")
+* util.math ("timedOut") //service
 
 ### listeners
-instruction.timeelapsed
-instruction.task.*
-instruction.message
-instruction.criteria.time.pass
--- util.proxy
-instruction.criteria.pass
-instruction.criteria.fail
-instruction.time.fail
+* instruction.timeelapsed
+* instruction.task.*
+* instruction.message
+* instruction.criteria.time.pass
+    * "util.proxy"
+* instruction.criteria.pass
+* instruction.criteria.fail
+* instruction.time.fail
 
 
 	
 ## gaze
-errorThreshold: 0.33
-statusProperties: Object
-gazeAccuracy: function (ma){
-gazeMovement: function (ma){
-getGazeTrackingStatus: function (state){
-updateGazeDotPosition: function (){
+* errorThreshold: 0.33
+* statusProperties: Object
+* gazeAccuracy: function (ma){
+* gazeMovement: function (ma){
+* getGazeTrackingStatus: function (state){
+* updateGazeDotPosition: function (){
 
 ### dependencies
--- controller.main ("update")
--- model.movingAverages
--- model.calibPoint
--- util.document
+* controller.main ("update")
+* model.movingAverages
+* model.calibPoint
+* util.document
 
 ### listeners
--- view.gazeDot (gaze.position)
+* view.gazeDot (gaze.position)
 	
 ## head
-categoriseAxis: function (axis,val,proportion){
-categorisePitch: function (pitch){
-categoriseYaw: function (yaw){
-getAxisRange: function (axis){
-normaliseAxis: function (axis,val){
-positionUserHead: function (pitch,yaw){
-thresholdProportion:0.5
-pitchRange: 0.2
-yawRange: 0.3
-scaleErrorLevel: 0.05 // probably deprecate now there is free head movement
+* categoriseAxis: function (axis,val,proportion){
+* categorisePitch: function (pitch){
+* categoriseYaw: function (yaw){
+* getAxisRange: function (axis){
+* normaliseAxis: function (axis,val){
+* positionUserHead: function (pitch,yaw){
+* thresholdProportion:0.5
+* pitchRange: 0.2
+* yawRange: 0.3
+* scaleErrorLevel: 0.05 // probably deprecate now there is free head movement
 
-updateErrorState: function (){ // deprecate ??
+* updateErrorState: function (){ // deprecate ??
 
 	
 ## feedback
