@@ -117,7 +117,7 @@ other positions
  height:100%;
  font-family:"Roboto Slab",Georgia, "Times New Roman", Times, serif;
  /*font-weight:bold;*/
-	 letter-spacing:-1px;
+ letter-spacing:-1px;
  color:#888;
  font-size:1.2em;
 }
@@ -230,27 +230,31 @@ other positions
 
 .feedback-messages{
 	position:absolute;
-	top:5%;
+	bottom:5%;
 	left:5%;
-	font-family: Arial;
-	font-size:13px;
-	list-style:none;
-	width:30%;
-	border:1px solid #ccc;
-	margin-left:0;
-	padding-left:0;
-	background:rgba(255,255,255,0.5);
+	width:90%;
+	text-align:center;
+	font-family:"Roboto Slab",Georgia, "Times New Roman", Times, serif;
+	letter-spacing:-1px;
+	color:#fff;
+	font-size:2em;
+    text-shadow:0 0 2px #000;
 }
+.feedback-messages p,
 .feedback-messages li{
-	padding:0.3em;
+	font-size:0.7em;
+	text-align:left;
+	letter-spacing:0;
 }
-.feedback-messages .error{
-	color:#f00;
+.feedback-messages ul{
+	margin-top:0.4em;
+
+	margin-bottom:0em;
 }
 
 /* help */
 .help{
-	positon:absolute;
+	position:absolute;
 	top:5%;
 	left:5%;
 	width:90%;
@@ -271,7 +275,7 @@ other positions
 	 width:30%;
 	 height:95%;
 	 padding:0 20px;
-	display:none;
+	 display:none;
  }
  .stateDebugger{
 	 right:2%;
