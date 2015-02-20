@@ -182,7 +182,7 @@ other positions
  }
 
  .debug-gaze .gazeDot{
- 	display:block;
+ 	/*display:block;*/
  }
  
  
@@ -275,7 +275,7 @@ other positions
 	 width:30%;
 	 height:95%;
 	 padding:0 20px;
-	 /*display:none;*/
+	 display:none;
  }
  .stateDebugger{
 	 right:2%;
