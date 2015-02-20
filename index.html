@@ -2,6 +2,8 @@
 	<head>
 		 <title>Calib 2015 b</title> 
 		 <link href="style/calibdot.css" media="all" rel="stylesheet" />
+
+		 <script type="text/javascript" src="lib/api/xlabs.js"></script>
 		 <script type="text/javascript" src="lib/calibration/ui.js"></script>
 		 <script type="text/javascript" src="lib/calibration/proxy.js"></script>
 	     <script type="text/javascript" src="lib/jquery-1.11.1.js"></script>
@@ -25,6 +27,7 @@
 		<div class="videoFrame">
 			<div class="video">
 				<div class="video--feed">
+					<video id="xLabsPreview" autoplay></video>
 					<div class="feedback-messages">This is feedback</div>
 				</div>
 			</div>
@@ -32,7 +35,7 @@
 	</div>
 	<div class="help">This is help, will provide links to guides etc.</div>
 	<button class="start">Start</button>
-	<button class="sim-start">Sim Start</button>
+	<!--<button class="sim-start">Sim Start</button>-->
 	<script type="text/javascript">
 	
 	
@@ -60,60 +63,51 @@
 	
 	
 	*/
-	
-	var xlabs;
+
+
 	$(function() {
-		xlabs = {
-			calib:{
-				ui:calibUi,
-				proxy:calibProxy
-			}
-		};
+		
 		
 		$('.start').on( "click", function(e){
-			xlabs.calib.ui.start(e,feedbackTest,sequences);
+			xLabs.calib.ui.start(e,calibInstructions,sequences);
 		});
 		
 		$('.sim-start').on( "click", function(e){
 			
-			//xlabs.calib.ui.start(e,testDot);
+			//xLabs.calib.ui.start(e,testDot);
 			/**/
-			xlabs.calib.proxy.simMode(true);
-			xlabs.calib.ui.simulateStart(tom_full_calib_r010,e,calibInstructions,sequences);
+			xLabs.calib.proxy.simMode(true);
+			xLabs.calib.ui.simulateStart(tom_full_calib_r010,e,calibInstructions,sequences);
 			
-			//xlabs.calib.ui.instructionsStart();
+			//xLabs.calib.ui.instructionsStart();
 		});
 
-		//xlabs.calib.proxy.debugMode(true);
+		//xLabs.calib.proxy.debugMode(true);
 		$( "body" ).keyup(function( event ) {
 			switch( event.which) {
 				case 88: //x
-					xlabs.calib.proxy.off();
+					xLabs.calib.proxy.off();
 					
-					//console.log(JSON.stringify(xlabs.calib.ui.log))
+					//console.log(JSON.stringify(xLabs.calib.ui.log))
 					break;
 				case 83: //s
-					xlabs.calib.proxy.on();
-					xlabs.calib.ui.instructionsStart();
+					xLabs.calib.proxy.on();
+					xLabs.calib.ui.instructionsStart();
 					break;
 				case 65: //a
-					xlabs.calib.proxy.simMode(true);
-					xlabs.calib.ui.simulateStart(slim_calib);
-					xlabs.calib.ui.instructionsStart();
+					xLabs.calib.proxy.simMode(true);
+					xLabs.calib.ui.simulateStart(slim_calib);
+					xLabs.calib.ui.instructionsStart();
 					break;
 				case 90: //z
-					xlabs.calib.ui.simulateStop();
-					xlabs.calib.proxy.simMode(false);
+					xLabs.calib.ui.simulateStop();
+					xLabs.calib.proxy.simMode(false);
 					break;
 			}
 		});
-		document.addEventListener( "xLabsApiReady", function() {
-			//xlabs.calib.ui.onApiReady();
-		});
-
-		document.addEventListener( "xLabsApiState", function( event ) {
-			xlabs.calib.ui.onApiState( event.detail );
-		});
+		
+		//xLabs.setup( xLabs.calib.ui.onApiReady, xLabs.calib.ui.onApiState );
+	
 		/*
 	    window.addEventListener( "mousemove", function(e) {
 	      // 1. Use this to compute document origin 
@@ -161,7 +155,7 @@
 	
 	var feedbackTest  = [
 		{delay:1,task:{ method:'showFeedback', param:true}},
-		{delay:3500, expire:20000, msgTarget:"feedback", msg:"I just need to check your camera image.", criteria:{type:"environment", ma:2, delay:2500, failsequence:"failcomplete"}},
+		{delay:3500, expire:2000000, msgTarget:"feedback", msg:"I just need to check your camera image.", criteria:{type:"environment", ma:2, delay:2500, failsequence:"failcomplete"}},
 		{delay:1,task:{ method:'showFeedback', param:false }}
 	];
 	
