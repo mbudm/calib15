@@ -38,6 +38,8 @@
         "uglify-js": "*",
         "mocha": "*",
         "chai": "*",
-				"sinon": "*"
+				"sinon": "*",
+				"grunt-browserify": "*",
+				"grunt-contrib-watch":"*"
     }
 }

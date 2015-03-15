@@ -1,4 +1,4 @@
-var api = require('./node_modules/xLabsApi');
+var api = require('xLabs-api');
 
 api.setup(this, function(){
 	console.log('api ready');
