@@ -1,0 +1,43 @@
+{
+    "name": "xLabs-calib15",
+    "version": "0.1.0",
+    "description": "An experimental calibration UI for the xLabs Gaze Tracking extension",
+		"scripts": {
+		    "preinstall": "npm install -g grunt-cli"
+		 },
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/mbudm/calib15.git"
+    },
+    "keywords": [
+        "xlabs",
+        "calibration",
+				"gaze-tracking",
+				"chrome",
+        "browser",
+        "amd"
+    ],
+    "author": {
+        "name": "Steve Robertsn",
+        "email": "steve@xlabs.com.au",
+        "url": "http://xlabsgaze.com/"
+    },
+    "license": "Unlicense",
+    "readmeFilename": "README.md",
+    "bugs": {
+        "url": "https://github.com/mbudm/calib15/issues"
+    },
+		"dependencies":{
+			"xLabsApi":"mbudm/xLabsApi.git#0.1.0",
+			 "event-emitter": "~0.3.1"
+		},
+    "devDependencies": {
+        "uglify-js": "*",
+        "mocha": "*",
+        "chai": "*",
+				"sinon": "*"
+    }
+}
