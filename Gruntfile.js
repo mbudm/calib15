@@ -6,7 +6,14 @@ module.exports = function(grunt) {
     },
 		watch: {
       files: [ "src/**/*.js"],
-      tasks: [ 'browserify' ]
+      tasks: [ 'build' ]
+    },
+		tape: {
+      options: {
+        pretty: true,
+        output: 'console'
+      },
+      files: ['test/**/*.js']
     },
 		copy: {
 		  main: {
@@ -20,7 +27,13 @@ module.exports = function(grunt) {
 			}
 		}
   })
- 	grunt.loadNpmTasks('grunt-browserify')
- 	grunt.loadNpmTasks('grunt-contrib-watch')
-	grunt.loadNpmTasks('grunt-contrib-copy')
+ 	grunt.loadNpmTasks('grunt-browserify');
+ 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-tape');
+  grunt.registerTask('test', ['tape']);
+  grunt.registerTask('ci', ['tape:ci']);
+  grunt.registerTask('build', ['test','browserify','copy']);
+
+  grunt.registerTask('default', ['build']);
 }

@@ -25,7 +25,7 @@ Modules
 * stopCalibration: function (){
 	
 ### dependencies
-* document ("xLabsApiReady","xLabsApiState)
+* xLabsApi
 
 ### listeners
 * util.proxy ("xlabson", "xlabsoff")
