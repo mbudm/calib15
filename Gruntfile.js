@@ -2,7 +2,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 		browserify: {
-      'build/Release/bundle.js': ['src/app.js']
+			/*
+			build:{
+      	'build/Release/bundle.js': ['src/app.js']
+			},
+			tests:{*/
+				'test/bundle.js': ['test/tests.js']
+			//}
     },
 		watch: {
       files: [ "src/**/*.js"],
@@ -13,7 +19,7 @@ module.exports = function(grunt) {
         pretty: true,
         output: 'console'
       },
-      files: ['test/**/*.js']
+      files: ['test/unit/**/*.js']
     },
 		copy: {
 		  main: {
@@ -34,6 +40,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['tape']);
   grunt.registerTask('ci', ['tape:ci']);
   grunt.registerTask('build', ['test','browserify','copy']);
-
   grunt.registerTask('default', ['build']);
 }

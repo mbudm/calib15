@@ -22,48 +22,62 @@
 /* Dependencies */
 var EventEmitter = require('event-emitter');
 
-var ee = new EventEmitter;
+var ee = new EventEmitter();
 
 /* Properties */
-var isTracking = false;
+var isTracking, isSetup, isStarted = false;
 
 
 /* Private Methods */
-var setup = function(){
-	
-};
-var update = function(){
-	
-	ee.emit('update');
-};
-
-var startCalibration = function(){
-	
-	ee.emit('xlabson'); // will come from the view?
-};
-var stopCalibration = function(){
-	
-	ee.emit('xlabsoff'); // will cme from the view?
-};
 
 /* Public methods */
+var setup = function(){
+	isSetup = true;
+};
+
+var update = function(data){
+	if(isStarted && isSetup && data.system.mode === "training" &&  !data.state.trackingSuspended){
+		if(!isTracking){
+			isTracking = true;
+			ee.emit('tracking-on');
+		}
+		ee.emit('tracking-update',data);
+	}else if(isTracking){
+		isTracking = false;
+		ee.emit('tracking-off');
+	}
+};
+
+var startCalibration = function(){	
+	isStarted = true;
+};
+var stopCalibration = function(){
+	isStarted = false;
+};
+
 var getIsTracking = function(){
 	return isTracking;
 };
-var onApiState = function(eName,callback,scope){
-	
-};
-var onApiReady = function(eName,callback,scope){
-	
-};
+
+var on = function(t,l){
+	ee.on(t,l);
+}
+
+var off = function(t,l){
+	ee.removeListener(t,l);
+}
+
+var once = function(t,l){
+	ee.once(t,l);
+}
 
 module.exports = {
-	on:ee.on,
-	off:ee.off,
-	once:ee.once,
+	on:on,
+	off:off,
+	once:once,
 	isTracking:getIsTracking,
 	onApiUpdate:update,
-	onApiReady:onApiReady,
+	onApiReady:setup,
 	start:startCalibration,
 	end:stopCalibration
 };
