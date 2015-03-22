@@ -1,30 +1,29 @@
 /* Dependencies */
-var EventEmitter = require('event-emitter');
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 var $ = require('jquery');
-
-var ee = new EventEmitter;
 
 /* UI */
 var $startBtn = $('<btn class="start">Start</btn>');
 $('body').append($startBtn);
 
-/* handlers */
-$startBtn.on('click',function(){
-	ee.emit('start');
-});
 
-var on = function(t,l){
-	ee.on(t,l);
+
+
+function Ctrls(){
+	var me = this
+	/* handlers */
+	$startBtn.on('click',function(){
+		me.emit('start');
+	});
 }
 
-var off = function(t,l){
-	ee.removeListener(t,l);
-}
+// extend eventemitter
+util.inherits(Ctrls, EventEmitter);
 
-module.exports = {
-	on:on,
-	off:off,
-	getStartButton:function(){
+//add publics. Todo: map the prototype?
+Ctrls.prototype.getStartButton = function(){
 		return $startBtn;
-	}
-}
+};
+
+module.exports = Ctrls;
