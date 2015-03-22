@@ -1,5 +1,7 @@
 var test = require('tape');
-var main = require('../../../src/controller/main');
+var MainController = require('../../../src/controller/main');
+
+var main = new MainController();
  
 test('main exists', function (t) {
     t.ok(main,'main exists');
@@ -7,9 +9,10 @@ test('main exists', function (t) {
 });
 
 test('main event emitter ok', function (t) {
-		t.plan(2);
-		t.ok(main.on, 'main.on public mehtod exists');
-		t.ok(main.off, 'main.off public mehtod exists');
+		t.plan(3);
+		t.ok(main.on, 'main.on public method exists');
+		t.ok(main.once, 'main.removeListener public method exists');
+		t.ok(main.removeListener, 'main.removeListener public method exists');
 });
 
 test('main fires tracking-on and tracking-update events', function (t) {

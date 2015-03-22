@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         pretty: true,
         output: 'console'
       },
-      files: ['test/unit/**/*.js']
+      files: ['test/unit/controller/**/*.js']
     },
 		copy: {
 		  main: {

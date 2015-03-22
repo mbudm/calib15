@@ -20,9 +20,8 @@
 */
 
 /* Dependencies */
-var EventEmitter = require('event-emitter');
-
-var ee = new EventEmitter();
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 
 /* Properties */
 var isTracking, isSetup, isStarted = false;
@@ -39,12 +38,12 @@ var update = function(data){
 	if(isStarted && isSetup && data.system.mode === "training" &&  !data.state.trackingSuspended){
 		if(!isTracking){
 			isTracking = true;
-			ee.emit('tracking-on');
+			this.emit('tracking-on');
 		}
-		ee.emit('tracking-update',data);
+		this.emit('tracking-update',data);
 	}else if(isTracking){
 		isTracking = false;
-		ee.emit('tracking-off');
+		this.emit('tracking-off');
 	}
 };
 
@@ -59,25 +58,17 @@ var getIsTracking = function(){
 	return isTracking;
 };
 
-var on = function(t,l){
-	ee.on(t,l);
-}
 
-var off = function(t,l){
-	ee.removeListener(t,l);
-}
+function Main(){}
 
-var once = function(t,l){
-	ee.once(t,l);
-}
+// extend eventemitter
+util.inherits(Main, EventEmitter);
 
-module.exports = {
-	on:on,
-	off:off,
-	once:once,
-	isTracking:getIsTracking,
-	onApiUpdate:update,
-	onApiReady:setup,
-	start:startCalibration,
-	end:stopCalibration
-};
+//add publics. Todo: map the prototype?
+Main.prototype.isTracking = getIsTracking;
+Main.prototype.onApiUpdate = update;
+Main.prototype.onApiReady = setup;
+Main.prototype.start = startCalibration;
+Main.prototype.end = stopCalibration;
+
+module.exports = Main;
