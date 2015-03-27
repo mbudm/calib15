@@ -1,7 +1,6 @@
 var test = require('tape');
-var MainController = require('../../../src/controller/main');
-
-var main = new MainController();
+var main = require('../../../src/controller/main');
+//var main = new MainController();
  
 test('main exists', function (t) {
     t.ok(main,'main exists');

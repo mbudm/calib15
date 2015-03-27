@@ -20,7 +20,7 @@ coverage
 build/Release
 
 # compiled tests for browser inspection
-test/bundle.js
+test/dist
 
 # Dependency directory
 # Commenting this out is preferred by some people, see

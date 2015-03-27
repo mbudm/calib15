@@ -1,10 +1,8 @@
 var api = require('xLabs-api');
-var Main = require('./controller/main');
+var main = require('./controller/main');
 var controls = require('./view/controls');
 
-var m = new Main();
+api.setup(main, main.onApiReady, main.onApiUpdate);
 
-api.setup(m, m.onApiReady, m.onApiUpdate);
-
-controls.on('start',m.start);
-controls.on('end',m.end);
+controls.on('start',main.start);
+controls.on('end',main.end);

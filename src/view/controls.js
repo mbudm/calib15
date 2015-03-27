@@ -8,15 +8,13 @@ var $startBtn = $('<btn class="start">Start</btn>');
 $('body').append($startBtn);
 
 
-
-
 function Ctrls(){
 	var me = this
 	/* handlers */
 	$startBtn.on('click',function(){
 		me.emit('start');
 	});
-}
+};
 
 // extend eventemitter
 util.inherits(Ctrls, EventEmitter);
@@ -26,4 +24,4 @@ Ctrls.prototype.getStartButton = function(){
 		return $startBtn;
 };
 
-module.exports = Ctrls;
+module.exports = new Ctrls();

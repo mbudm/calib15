@@ -1,6 +1,6 @@
 var test = require('tape'),
-		CtrlsView = require('../../../src/view/controls'),
-		ctrls = new CtrlsView(),
+		ctrls = require('../../../src/view/controls'),
+		//ctrls = new CtrlsView(),
 		startBtn;
  
 test('controls exists', function (t) {

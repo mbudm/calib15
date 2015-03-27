@@ -19,6 +19,8 @@
 
 */
 
+
+
 /* Dependencies */
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -59,7 +61,9 @@ var getIsTracking = function(){
 };
 
 
-function Main(){}
+function Main(){
+	EventEmitter.call(this);
+}
 
 // extend eventemitter
 util.inherits(Main, EventEmitter);
@@ -71,4 +75,4 @@ Main.prototype.onApiReady = setup;
 Main.prototype.start = startCalibration;
 Main.prototype.end = stopCalibration;
 
-module.exports = Main;
+module.exports = new Main();
