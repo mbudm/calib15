@@ -5,8 +5,11 @@ var TESTLING_TESTS = './test/unit/view/**/*.js';
 var ALL_TESTS = './test/all.js';
 var ALL_TESTS_DEST = './test/dist';
 
+var ALL_TESTS_GLOB = './test/unit/**/*.js';
+
 var APP_SRC = './src/app.js';
 var APP_DEST = './build/Release';
+var APP_GLOB = './src/**/*.js';
 
 var BUNDLE_FILENAME ='bundle.js';
 
@@ -18,30 +21,24 @@ var buffer = require('vinyl-buffer');
 var watchify = require('watchify');
 var browserify = require('browserify');
 
+var shelljs = require('shelljs');
+var gulpshell = require('gulp-shell');
 
-gulp.task('js', appBundle); // so you can run `gulp js` to build the file
-gulp.task('test-build', testBundle); // so you can run `gulp test-build` to build the file
-
-gulp.task('default', ['js','test-build']); // so you can run `gulp test-build` to build the file
 
 var bundler = watchify(browserify(watchify.args));
-// add the file to bundle
 bundler.add(APP_SRC);
-// add any other browserify options or transforms here
 bundler.transform('brfs');
-bundler.on('update', appBundle); // on any dep update, runs the bundler
-bundler.on('log', gutil.log); // output build logs to terminal
+bundler.on('update', appBundle); 
+bundler.on('log', gutil.log); 
 
 var testBundler = watchify(browserify(watchify.args));
-// add the file to bundle
 testBundler.add(ALL_TESTS);
-// add any other browserify options or transforms here
 testBundler.transform('brfs');
-testBundler.on('update', testBundle); // on any dep update, runs the bundler
-testBundler.on('log', gutil.log); // output build logs to terminal
+testBundler.on('update', testBundle); 
+testBundler.on('log', gutil.log); 
 
 function appBundle(){
-	bundle(bundler,APP_DEST);
+	return bundle(bundler,APP_DEST);
 }
 
 function testBundle(){
@@ -58,5 +55,20 @@ function bundle(b,dest) {
       .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
       .pipe(sourcemaps.write('./')) // writes .map file
     //
-    .pipe(gulp.dest(dest));
+	.pipe(gulp.dest(dest));
 }
+
+gulp.task("autotest", function() {
+	gulp.watch(
+	    [APP_GLOB, ALL_TESTS_GLOB], 
+	    ["testling"]
+	);
+});
+
+gulp.task('testling', gulpshell.task([
+  'browserify '+ALL_TESTS_GLOB+' | testling']));
+
+gulp.task('js', appBundle); // $ gulp js // to build the file
+gulp.task('test-build', testBundle); // $ gulp test-build // to build the test file for browser testing and tdd dev
+
+gulp.task('default', ['js']); // $ gulp //

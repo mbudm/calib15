@@ -29,7 +29,7 @@ var EventEmitter = require('events').EventEmitter;
 var isTracking, isSetup, isStarted = false;
 
 
-/* Private Methods */ 
+/* Private Methods */
 
 /* Public methods */
 var setup = function(){
