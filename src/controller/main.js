@@ -1,26 +1,3 @@
-/*
-
-## main
-* isTracking: false
-* update: function (state){
-* onApiState: function ( state ){
-* setup: function (){
-* start: function (e,mainInstructions, subSequences){
-* stopCalibration: function (){
-	
-### dependencies (listens to)
-* xLabsApi
-
-### listeners
-* util.proxy ("xlabson", "xlabsoff")
-* "update"
-    * controller.gaze
-    * controller.instructions
-
-*/
-
-
-
 /* Dependencies */
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -28,8 +5,6 @@ var EventEmitter = require('events').EventEmitter;
 /* Properties */
 var isTracking, isSetup, isStarted = false;
 
-
-/* Private Methods */
 
 /* Public methods */
 var setup = function(){

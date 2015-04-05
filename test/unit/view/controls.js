@@ -18,7 +18,7 @@ test('start button exists', function (t) {
 test('start button click fires start event', function (t) {
 		t.plan(2);
 		startBtn.click(function(){
-			 t.pass('click event fired');
+			 t.pass('click event fired ');
 		});
 		ctrls.on('start',function(){
 			 t.pass('start event fired');
