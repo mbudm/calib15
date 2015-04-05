@@ -7,4 +7,4 @@ var m  = new Main();
 api.setup(main, main.onApiReady, main.onApiUpdate);
 
 controls.on('start', main.start);
-controls.on('end', main.end);
+controls.on('end', main.end);  

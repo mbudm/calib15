@@ -28,13 +28,15 @@ var gulpshell = require('gulp-shell');
 var bundler = watchify(browserify(watchify.args));
 bundler.add(APP_SRC);
 bundler.transform('brfs');
-bundler.on('update', appBundle); 
+//Now triggered by gulp.watch which does the tests first
+//bundler.on('update', appBundle); 
 bundler.on('log', gutil.log); 
 
 var testBundler = watchify(browserify(watchify.args));
 testBundler.add(ALL_TESTS);
 testBundler.transform('brfs');
-testBundler.on('update', testBundle); 
+//Now triggered by gulp.watch which does the tests first
+//testBundler.on('update', testBundle); 
 testBundler.on('log', gutil.log); 
 
 function appBundle(){
@@ -61,14 +63,20 @@ function bundle(b,dest) {
 gulp.task("autotest", function() {
 	gulp.watch(
 	    [APP_GLOB, ALL_TESTS_GLOB], 
-	    ["testling"]
+	    ["testling",'js','test-build']
 	);
 });
 
-gulp.task('testling', gulpshell.task([
-  'browserify '+ALL_TESTS_GLOB+' | testling']));
+//gulp.task('testling', gulpshell.task(['browserify '+ALL_TESTS_GLOB+' | testling']));
+
+gulp.task('testling', function(){
+	return gulp.src(ALL_TESTS_GLOB)
+			.pipe(gulpshell([
+				'browserify '+ALL_TESTS_GLOB+' | testling'
+			]));
+});
 
 gulp.task('js', appBundle); // $ gulp js // to build the file
 gulp.task('test-build', testBundle); // $ gulp test-build // to build the test file for browser testing and tdd dev
 
-gulp.task('default', ['js']); // $ gulp //
+gulp.task('default', ['autotest']); // $ gulp //
