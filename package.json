@@ -29,8 +29,11 @@
   },
   "scripts": {
     "test": "testling",
-		"test:watch": "watch 'npm test' test/unit",
-    "watch": "watchify src/app.js -o dist/bundle.js -dv & npm run test:watch"
+    "test:watch": "watch 'npm run lint:test & npm test' test/unit",
+		"build:watch": "watch 'npm run lint:build' src & watchify src/app.js -o dist/bundle.js -dv ",
+		"lint:test": "jshint test/unit",
+		"lint:build": "jshint src",
+    "watch": "npm run test:watch & npm run build:watch"
   },
   "dependencies": {
     "xLabsApi": "mbudm/xLabsApi.git#0.1.0",
@@ -39,6 +42,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "jshint": "^2.6.3",
     "onchange": "^1.0.0",
     "tape": "^3.5.0",
     "testling": "^1.7.1",

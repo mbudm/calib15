@@ -9,12 +9,12 @@ $('body').append($startBtn);
 
 
 function Ctrls(){
-	var me = this
+	var me = this;
 	/* handlers */
 	$startBtn.on('click',function(){
 		me.emit('start');
 	});
-};
+}
 
 // extend eventemitter
 util.inherits(Ctrls, EventEmitter);
