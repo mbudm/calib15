@@ -43,7 +43,7 @@ function Main(){
 // extend eventemitter
 util.inherits(Main, EventEmitter);
 
-//add publics. Todo: map the prototype?
+//add publics. 
 Main.prototype.isTracking = getIsTracking;
 Main.prototype.onApiUpdate = update;
 Main.prototype.onApiReady = setup;

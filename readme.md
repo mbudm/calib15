@@ -113,7 +113,7 @@ simulateTimeout: function (){
 	
 # models
 
-## kvState
+## apiStore (move in to api?)
 lastState: null
 getFps: function (){
 gazePos:[]

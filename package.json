@@ -30,6 +30,8 @@
   "scripts": {
     "test": "testling",
     "test:watch": "watch 'npm run lint:test & npm test' test/unit",
+		"test:build": "browserify -d test/all.js > test/dist/bundle.js",
+		"build": "browserify -d src/app.js > dist/bundle.js",
 		"build:watch": "watch 'npm run lint:build' src & watchify src/app.js -o dist/bundle.js -dv ",
 		"lint:test": "jshint test/unit",
 		"lint:build": "jshint src",
