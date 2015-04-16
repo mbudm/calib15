@@ -1,0 +1,366 @@
+{
+  "state": {
+    "timestamp": "1429151439715",
+    "frameRate": {
+      "camera": "10.334180248980674",
+      "pipeline": "9.8471993172608467"
+    },
+    "calibration": {
+      "confidence": "-1"
+    },
+    "trackingSuspended": "1",
+    "head": {
+      "x": "-0.509438038",
+      "y": "0.184584275",
+      "z": "1.26572096",
+      "roll": "-0.0571643524",
+      "pitch": "0.66227603",
+      "yaw": "-0.119460031"
+    },
+    "gaze": {
+      "vector": {
+        "x": "-0.121131815",
+        "y": "0.0443620905"
+      },
+      "measured": {
+        "x": "0",
+        "y": "0"
+      },
+      "estimate": {
+        "x": "0",
+        "y": "0"
+      }
+    },
+    "image": {
+      "size": {
+        "width": "1280",
+        "height": "720"
+      }
+    }
+  },
+  "browser": {
+    "screen": {
+      "x": "0",
+      "y": "0",
+      "width": "1440",
+      "height": "900",
+      "dpi": "128",
+      "devicePixelRatioWithoutZoom": "1"
+    },
+    "canvas": {
+      "intervalFocus": "50",
+      "intervalBlur": "200",
+      "paintHeadPose": "0",
+      "paintLearning": "1",
+      "enabled": "0",
+      "captureMouse": "0",
+      "captureKeyboard": "0"
+    },
+    "mouse": {
+      "absScreenCoordinates": "1",
+      "event": {
+        "move": {
+          "xScreen": "0",
+          "yScreen": "0",
+          "t": "0"
+        },
+        "down": {
+          "xScreen": "0",
+          "yScreen": "0",
+          "t": "0"
+        },
+        "up": {
+          "xScreen": "0",
+          "yScreen": "0",
+          "t": "0"
+        }
+      }
+    },
+    "keyboard": {
+      "event": {
+        "keyCode": "0",
+        "t": "0"
+      }
+    },
+    "document": {
+      "offset": {
+        "ready": "1",
+        "x": "1",
+        "y": "73"
+      }
+    }
+  },
+  "system": {
+    "persistentConfigPath": "/mnt/persistent/persistent.config.json",
+    "mode": "off",
+    "stop": "0",
+    "pushConfigIntervalMsec": "60"
+  },
+  "frame": {
+    "stream": {
+      "enabled": "0",
+      "preview": "0",
+      "width": "1280",
+      "height": "720",
+      "format": "BGRA",
+      "rate": "15",
+      "offline": "0",
+      "message": "0",
+      "frameRateThrottler": {
+        "enabled": "1",
+        "targetFps": "15"
+      },
+      "file": {
+        "directory": "/home/alan/workspace/gaze_data/pok_short",
+        "regex": ".*jpeg",
+        "recursive": "1",
+        "skip": "0",
+        "readMode": "1",
+        "loop": "1",
+        "delay": "0",
+        "useFileTimeStamp": "0",
+        "prefixFileTimeStamp": "_utc_"
+      },
+      "filters": {
+        "whiteNoise": {
+          "enabled": "0"
+        },
+        "randomDeform": {
+          "enabled": "0"
+        }
+      }
+    }
+  },
+  "http": {
+    "enabled": "1",
+    "staticDirectory": "./www",
+    "host": "127.0.0.1",
+    "port": "8082",
+    "threads": "1",
+    "frame": {
+      "default": "./www/no_frame.jpg",
+      "delay": "50"
+    }
+  },
+  "truth": {
+    "enabled": "0",
+    "file": "/truth.csv",
+    "persist1": "3000",
+    "persist2": "2500",
+    "interval": "50",
+    "mouse": "0",
+    "x": "500",
+    "y": "500",
+    "temp": {
+      "append": "",
+      "clear": "",
+      "enabled": "",
+      "id": ""
+    },
+    "append": "1428733419581,1428733419631,520,284",
+    "clear": ""
+  },
+  "watch": {
+    "enabled": "0",
+    "file": "/watch.csv",
+    "persist1": "2000",
+    "persist2": "500",
+    "persistThreshold": "500",
+    "temp": {
+      "enabled": "0",
+      "append": "1429151439861, 465.838, 400.156, 638.732, 382.725, 541, 548, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1",
+      "clear": "",
+      "id": ""
+    },
+    "append": "1429151439861, 465.838, 400.156, 638.732, 382.725, 541, 548, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1",
+    "clear": ""
+  },
+  "pipeline": {
+    "packetQueue": {
+      "length": "1"
+    },
+    "tracking": {
+      "enabled": "0"
+    },
+    "pinpoint": {
+      "enabled": "0"
+    },
+    "validation": {
+      "enabled": "0"
+    }
+  },
+  "calibration": {
+    "status": "0",
+    "clear": "0",
+    "active": "0",
+    "completed": "0",
+    "request": "0",
+    "intervalRequest": "0",
+    "interval": "10000"
+  },
+  "validation": {
+    "lastFrameTimestamp": "1429151439819",
+    "valid": "1",
+    "errors": "",
+    "facePosition": "438,384,231,175",
+    "errorsEye[L]": "",
+    "errorsEye[R]": "",
+    "errorsFace": ""
+  },
+  "algorithm": {
+    "calib": {
+      "mode": "simplePoly",
+      "ignoreHeadRoll": "1",
+      "truthCsvHeader": "t1,t2,xs,ys",
+      "downSampleSize": "1000",
+      "gazeAccuracyByRobustnessEnabled": "1",
+      "numPerturbedCalib": "3",
+      "polyDegree": "3",
+      "polyTerms": "/data/step_reduce_terms.txt",
+      "truthBuffer": {
+        "beforeMsec": "200",
+        "afterMsec": "0"
+      },
+      "reduceBlockMode": "none",
+      "rejectOutlier": {
+        "enabled": "0",
+        "numItr": "3",
+        "minCovDeterminant": {
+          "numTrials": "3",
+          "inlierFraction": "0.9"
+        },
+        "fitGaussianInlierFraction": "0.99"
+      },
+      "selectNumTerms": {
+        "mode": "FIXED",
+        "fixed": {
+          "numTerms": "168"
+        },
+        "auto": {
+          "minNumTerms": "10",
+          "maxNumTerms": "168",
+          "alpha": "0.35"
+        }
+      },
+      "minNumSamplesPerTerm": "5"
+    },
+    "faceDetector": {
+      "useLbp": "1",
+      "cascadeFile": {
+        "harr": "/data/haarcascade_frontalface_alt2.xml",
+        "lbp": "/data/lbpcascade_frontalface.xml"
+      }
+    },
+    "asm": {
+      "maxNumIters": "2",
+      "maxMovementPixels": "10"
+    },
+    "canthi": {
+      "classifier": {
+        "descrSize": "1.6",
+        "keyPointOffset": {
+          "x": "0",
+          "y": "0"
+        },
+        "dataRangeFile": "/data/training_data.range",
+        "modelFile": "/data/training_data.linear_svm_model"
+      },
+      "useCanthiDetector": "1",
+      "useRobustDetector": "0",
+      "mode": "canthi-detector"
+    },
+    "statePostProcessing": {
+      "gazeKf": {
+        "processNoiseStddevPerMsec": "0.25",
+        "measurementNoiseStddev": "30"
+      }
+    },
+    "validation": {
+      "headCentreDistanceThreshold": "0.7",
+      "faceImageSizePixels": {
+        "width": "120",
+        "height": "160"
+      },
+      "minFaceSizePixels": {
+        "width": "100",
+        "height": "90"
+      },
+      "interRegionMeanThreshold": "0.1",
+      "regions": "Eye[L],Eye[R],Face",
+      "rectEye[L]": "0.5,0.1,0.5,0.3",
+      "thresholdMassLoEye[L]": "0.4",
+      "thresholdMassHiEye[L]": "0.1",
+      "thresholdIntensityLoEye[L]": "0.15",
+      "thresholdIntensityHiEye[L]": "0.75",
+      "rectEye[R]": "0,0.1,0.5,0.3",
+      "thresholdMassLoEye[R]": "0.4",
+      "thresholdMassHiEye[R]": "0.4",
+      "thresholdIntensityLoEye[R]": "0.15",
+      "thresholdIntensityHiEye[R]": "0.75",
+      "rectFace": "0,0.05,1,0.9",
+      "thresholdMassLoFace": "0.4",
+      "thresholdMassHiFace": "0.4",
+      "thresholdIntensityLoFace": "0.15",
+      "thresholdIntensityHiFace": "0.75"
+    }
+  },
+  "mouseEmulator": {
+    "enabled": "0",
+    "initialisationStatus": "uninitialised",
+    "ready": "0",
+    "sensitivity": {
+      "x": "1800",
+      "y": "1800"
+    },
+    "adaptive": {
+      "slowDownFraction": "0.2",
+      "bboxMin": "100",
+      "bboxMax": "600",
+      "alphaMin": "0.0",
+      "alphaMax": "1.0",
+      "alpha": "1.0"
+    },
+    "cursor": {
+      "x": "0",
+      "y": "0"
+    }
+  },
+  "gaze": {
+    "temp": {
+      "id": "",
+      "enabled": "0",
+      "append": "",
+      "clear": ""
+    }
+  },
+  "error": {
+    "temp": {
+      "id": "",
+      "enabled": "0",
+      "append": "",
+      "clear": ""
+    }
+  },
+  "click": {
+    "temp": {
+      "id": "",
+      "enabled": "0",
+      "append": "",
+      "clear": ""
+    }
+  },
+  "scroll": {
+    "temp": {
+      "id": "",
+      "enabled": "0",
+      "append": "1428921087590,0,12",
+      "clear": ""
+    }
+  },
+  "debug": {
+    "preview": {
+      "enabled": "0",
+      "targetFps": "100"
+    }
+  }
+}

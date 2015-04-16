@@ -1,4 +1,4 @@
-var test = require('tape');
+var test = require('tape-catch');
 var instructions = require('../../../src/controller/instructions');
 
 test('instructions exists', function (t) {
