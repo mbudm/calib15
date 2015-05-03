@@ -1,19 +1,8 @@
 var test = require('tape-catch');
 		ApiSubset = require('../../../src/model/apiSubset');
 var fs = require('fs');
-var path = './test/data/apifull.json';
-var testApiData;
-var	d =  fs.readFileSync('./test/data/apifull.json');
-
-if(fs.existsSync(path)){
-	var	d =  fs.readFileSync(path);
-	testApiData = JSON.parse(d);
-}else{
-	var ls = fs.readdirSync('./test/data/');
-	console.log('list:',ls);
-}
-
-		
+var	d =  fs.readFileSync('./test/data/apiFull.json','utf8');
+var testApiData = JSON.parse(d);
  
 test('apiSubset exists', function (t) {
     t.ok(ApiSubset,'ApiSubset exists');

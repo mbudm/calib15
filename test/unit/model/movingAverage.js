@@ -1,8 +1,8 @@
-require('require-json');
-var test = require('tape-catch');
-		root = require('rootrequire'), 
-		MovingAverage = require(root+'/src/model/movingAverage'),
-		testApiData = require(root+'/test/data/apiFull.json');
+var test = require('tape-catch'),
+		MovingAverage = require('../../../src/model/movingAverage');
+var fs = require('fs');
+var	d =  fs.readFileSync('./test/data/apiFull.json','utf8');
+var testApiData = JSON.parse(d);
  
 test('MovingAverage exists', function (t) {
     t.ok(MovingAverage,'MovingAverage exists');
@@ -27,7 +27,12 @@ test('MovingAverage create a model instance', function (t) {
 test('MovingAverage should inherit apiSubset parseApi - create a model instance from a full xlabs api object', function (t) {
 		var maFromApi = MovingAverage.parseApi(testApiData);
     t.ok(maFromApi,'maFromApi instance exists');
-    t.ok(maFromApi.isValid(),'maFromApi instance isValid');
+    t.notOk(maFromApi.isValid(),'maFromApi instance not isValid - doesnt have a size ');
+		maFromApi.updateProperties({
+			size:2
+		});
+
+    t.ok(maFromApi.isValid(),'maFromApi instance isValid - now has a size ');
 		t.equals(maFromApi.gazeX,parseFloat(testApiData.state.gaze.estimate.x),'gaze x set correctly');
 		t.equals(maFromApi.headY,parseFloat(testApiData.state.head.y),'head y set correctly');
     t.end();

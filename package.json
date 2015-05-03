@@ -30,8 +30,8 @@
   "scripts": {
     "test": "testling",
     "test:watch": "watch 'npm run lint:test & npm test' test/unit",
-    "test:build": "browserify -t brfs test/all.js > test/dist/bundle.js",
-    "build": "browserify -d -t brfs src/app.js > dist/bundle.js",
+    "test:build": "browserify -d test/all.js > test/dist/bundle.js",
+    "build": "browserify -d src/app.js > dist/bundle.js",
     "build:watch": "watch 'npm run lint:build' src & watchify src/app.js -o dist/bundle.js -dv ",
     "lint:test": "jshint test/unit",
     "lint:build": "jshint src",
@@ -61,7 +61,7 @@
     "watchify": "^2.6.0"
   },
   "testling": {
-    "files": "test/unit/**/*.js"
+    "files": "test/unit/model/**/*.js"
   },
   "browserify": {
     "transform": [

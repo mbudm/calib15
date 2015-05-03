@@ -1,8 +1,6 @@
 var mth = require('../util/math'),
 		model = require('model'),
-		ApiBase = rqrSrc('./apiBase'),
-		_ = require('underscore'),
-		util = require('util');
+		apiBase = require('./apiBase');
 
 //private
 var maSizeList = [3,5,8,10,15],
@@ -16,7 +14,7 @@ var maSizeList = [3,5,8,10,15],
 		
 function MovingAverage (){
   // Does all the stuff in Item as if it was a Pizza
-  ApiBase.apply(this, arguments);
+  apiBase.apply(this, arguments);
 
 	this.property('size', 'number', {required: true});
 }
