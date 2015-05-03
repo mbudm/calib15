@@ -1,8 +1,19 @@
-require('require-json');
 var test = require('tape-catch');
-		rqr = require('rqr'),
-		ApiSubset = rqr('src/model/apiSubset'),
-		testApiData = rqr('test/data/apiFull.json');
+		ApiSubset = require('../../../src/model/apiSubset');
+var fs = require('fs');
+var path = './test/data/apifull.json';
+var testApiData;
+var	d =  fs.readFileSync('./test/data/apifull.json');
+
+if(fs.existsSync(path)){
+	var	d =  fs.readFileSync(path);
+	testApiData = JSON.parse(d);
+}else{
+	var ls = fs.readdirSync('./test/data/');
+	console.log('list:',ls);
+}
+
+		
  
 test('apiSubset exists', function (t) {
     t.ok(ApiSubset,'ApiSubset exists');

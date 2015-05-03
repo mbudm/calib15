@@ -30,20 +30,24 @@
   "scripts": {
     "test": "testling",
     "test:watch": "watch 'npm run lint:test & npm test' test/unit",
-    "test:build": "browserify -d test/all.js > test/dist/bundle.js",
-    "build": "browserify -d src/app.js > dist/bundle.js",
+    "test:build": "browserify -t brfs test/all.js > test/dist/bundle.js",
+    "build": "browserify -d -t brfs src/app.js > dist/bundle.js",
     "build:watch": "watch 'npm run lint:build' src & watchify src/app.js -o dist/bundle.js -dv ",
     "lint:test": "jshint test/unit",
     "lint:build": "jshint src",
     "watch": "npm run test:watch & npm run build:watch"
   },
   "dependencies": {
-    "xLabsApi": "mbudm/xLabsApi.git#0.1.0",
+    "brfs": "^1.4.0",
     "event-emitter": "~0.3.1",
     "jquery": "~2.1.3",
-    "underscore": "1.6.x"
+    "jsonfile": "^2.0.0",
+    "rootrequire": "^1.0.0",
+    "underscore": "1.6.x",
+    "xLabsApi": "mbudm/xLabsApi.git#0.1.0"
   },
   "devDependencies": {
+    "brfs": "^1.4.0",
     "browserify": "^9.0.3",
     "jshint": "^2.6.3",
     "model": "^6.0.1",
@@ -58,5 +62,10 @@
   },
   "testling": {
     "files": "test/unit/**/*.js"
+  },
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
   }
 }

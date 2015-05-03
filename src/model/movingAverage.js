@@ -1,18 +1,35 @@
-var rqrSrc = require('rqr').withPrefix('src'),
-    mth = rqrSrc('util/math'),
-		apiStore = rqrSrc('store/apiStore'),
+var mth = require('../util/math'),
+		model = require('model'),
+		ApiBase = rqrSrc('./apiBase'),
 		_ = require('underscore'),
 		util = require('util');
 
 //private
 var maSizeList = [3,5,8,10,15],
 		maLib = [];
-function MovingAverageModel (maSize){
-	this.size = maSize;
+	
+		
+	/*
+		look up model docs to create a MovingAverageModel that extends ApiSubset
+		with the additon of a size property
+		*/
+		
+function MovingAverage (){
+  // Does all the stuff in Item as if it was a Pizza
+  ApiBase.apply(this, arguments);
+
+	this.property('size', 'number', {required: true});
 }
+
+
+
+MovingAverage = model.register('MovingAverage', MovingAverage);
+
+
+/*
 MovingAverageModel.prototype.size = null;
 
-util.inherits(MovingAverageModel, apiStore.getApiModel() );
+util.inherits(MovingAverageModel, model.get('') );
 
 for(var i = 0; i < maSizeList.length; i++){
 	maLib.push( new MovingAverageModel(maSizeList[i]));
@@ -41,5 +58,6 @@ var MovingAverages = {
   }
 };
 
+		*/
 
-module.exports = MovingAverages; //shared state across all instances. Not a singleton pattern as it's an instance of a static object, not a class.
+module.exports = MovingAverage; 

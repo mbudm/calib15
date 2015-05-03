@@ -1,5 +1,6 @@
-var test = require('tape-catch');
-var instructions = require('../../../src/controller/instructions');
+var test = require('tape-catch'),
+		//root = require('rootrequire'),
+		instructions = require('../../../src/controller/instructions');
 
 test('instructions exists', function (t) {
     t.ok(instructions,'instructions exists');
