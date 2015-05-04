@@ -61,7 +61,7 @@
     "watchify": "^2.6.0"
   },
   "testling": {
-    "files": "test/unit/model/**/*.js"
+    "files": "test/unit/**/*.js"
   },
   "browserify": {
     "transform": [
