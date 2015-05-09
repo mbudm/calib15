@@ -85,8 +85,7 @@ function checkInstruction(instructionObj){
 		return false;
 	}
 	var timeNow = Date.now(),
-		timeElapsed = Math.max( 0, ( timeNow - instructionObj.start ) );
-		
+			timeElapsed = Math.max( 0, ( timeNow - instructionObj.start ) );
 		
 	if(timeElapsed > instructionObj.delay){
 		// change this to switch on type?
@@ -125,6 +124,7 @@ function checkInstruction(instructionObj){
 			return true;
 		}
 	}
+	return false;
 }
 
 
@@ -139,5 +139,6 @@ util.inherits(Instructions, EventEmitter);
 
 //add publics. 
 Instructions.prototype.check = checkInstruction;
+Instructions.prototype.pass = passCriteria; // really just making public for more granular tests but could have public use
 
 module.exports = new Instructions();

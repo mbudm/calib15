@@ -18,7 +18,7 @@ test('MovingAverage create a model instance', function (t) {
 			headY:-0.5,
 			gazeScore:0.7,
 			size:2
-		})
+		});
     t.ok(ma,'MovingAverage instance exists');
     t.ok(ma.isValid(),'MovingAverage instance isValid');
     t.end();

@@ -16,7 +16,7 @@ test('apiSubset create a model instance', function (t) {
 			headX:0.5,
 			headY:-0.5,
 			gazeScore:0.7
-		})
+		});
     t.ok(subset,'subset instance exists');
     t.ok(subset.isValid(),'subset instance isValid');
     t.end();
